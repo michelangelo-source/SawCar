@@ -18,6 +18,10 @@ public class UserService {
         return userRepository.findAll();
     }
     public void addUser(User user){
+        System.out.println("user");
+        System.out.println(user.getEmail());
+        System.out.println(user.getNickname());
+        System.out.println("After");
         Optional<User>userIsAdded= userRepository.findByEmailAndNickname(user.getEmail(),user.getNickname());
         if(userIsAdded.isPresent()){
             throw new IllegalStateException("email or nickname taken");
