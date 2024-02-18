@@ -10,7 +10,28 @@ public class User {
     private String Nickname;
     private String Email;
     private String Password;
+
     private String Type;
+    private String Name;
+    private String Surname;
+
+    public User(String nickname, String email, String password, String name, String surname) {
+        Nickname = nickname;
+        Email = email;
+        Password = password;
+        Name = name;
+        Surname = surname;
+    }
+
+    public User(long id, String nickname, String email, String password, String type, String name, String surname) {
+        Id = id;
+        Nickname = nickname;
+        Email = email;
+        Password = password;
+        Type = type;
+        Name = name;
+        Surname = surname;
+    }
 
     public User(long Id, String Nickname, String email, String password, String type) {
         this.Id = Id;
@@ -19,6 +40,28 @@ public class User {
         this.Password = password;
         this.Type = type;
     }
+
+    public User() {
+    }
+
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public void setSurname(String surname) {
+        Surname = surname;
+    }
+
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getSurname() {
+        return Surname;
+    }
+
 
     public long getId() {
         return Id;
@@ -60,6 +103,5 @@ public class User {
         Type = type;
     }
 
-    public User() {
-    }
+
 }

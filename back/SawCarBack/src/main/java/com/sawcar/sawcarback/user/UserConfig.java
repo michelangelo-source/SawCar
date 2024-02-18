@@ -9,7 +9,7 @@ public class UserConfig {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository userRepository){
         return args -> {
-            User Admin=new User(2,"Admin","Admin@sawcar.pl","qq","Administrator");
+            User Admin=new User(2,"Admin","Admin@sawcar.pl","qq","Administrator","Admin","Admin");
             userRepository.save(Admin);
         };
     }

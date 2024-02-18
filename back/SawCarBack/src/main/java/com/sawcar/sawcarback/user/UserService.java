@@ -14,8 +14,15 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-
     public List<User> getUsers(){
         return userRepository.findAll();
+    }
+    public void addUser(User user){
+        Optional<User>userIsAdded= userRepository.findByEmailAndNickname(user.getEmail(),user.getNickname());
+        if(userIsAdded.isPresent()){
+            throw new IllegalStateException("email or nickname taken");
+        }
+        userRepository.save(user);
+        System.out.println(user);
     }
 }
