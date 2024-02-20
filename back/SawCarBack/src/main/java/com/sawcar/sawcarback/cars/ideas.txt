@@ -1,0 +1,14 @@
+
+###MARKI
+id marka
+
+
+
+###modele
+
+id markaid model
+
+
+##generacja
+
+id markaID moelID generacja

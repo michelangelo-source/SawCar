@@ -1,0 +1,3 @@
+modify user email name password etc
+deleteing
+add privilges user admin moderator

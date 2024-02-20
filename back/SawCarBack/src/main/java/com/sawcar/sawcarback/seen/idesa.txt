@@ -1,0 +1,9 @@
+POSTY
+id userid tresc zdjecie data MarkadID modelID generationID
+
+logowanie
+szukanie ludzi
+obserwowanie jak zapisać w bazie???
+przegladnai danego auta
+przegladania danego uzytkownika
+przegladnie ogolne obserwowanych
