@@ -19,9 +19,7 @@ public class UserController {
         return userService.getUsers();}
     @PostMapping
     @CrossOrigin
-    public void addUser(@RequestBody User user){
-
-        userService.addUser(user);
-
+    public RegisterInfo addUser(@RequestBody User user){
+        return(userService.addUser(user));
     }
 }

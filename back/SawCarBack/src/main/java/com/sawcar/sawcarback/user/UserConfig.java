@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UserConfig {
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository userRepository){
+    CommandLineRunner commandLineRunner(UserService userService){
         return args -> {
             User Admin=new User(2,"Admin","Admin@sawcar.pl","qq","Administrator","Admin","Admin");
-            userRepository.save(Admin);
+            userService.addUser(Admin);
         };
     }
 }

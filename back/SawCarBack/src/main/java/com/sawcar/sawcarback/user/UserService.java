@@ -17,16 +17,18 @@ public class UserService {
     public List<User> getUsers(){
         return userRepository.findAll();
     }
-    public void addUser(User user){
-        System.out.println("user");
-        System.out.println(user.getEmail());
-        System.out.println(user.getNickname());
-        System.out.println("After");
+    public RegisterInfo addUser(User user){
+        RegisterInfo registerInfo = new RegisterInfo();
+        //haszowanie hasła tutaj dorobic!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         Optional<User>userIsAdded= userRepository.findByEmailAndNickname(user.getEmail(),user.getNickname());
         if(userIsAdded.isPresent()){
-            throw new IllegalStateException("email or nickname taken");
+            registerInfo.setAdded(false);
+            registerInfo.setComment("email or nickname taken");
+            return registerInfo;
         }
         userRepository.save(user);
-        System.out.println(user);
+        registerInfo.setAdded(true);
+        registerInfo.setComment("succeed");
+        return registerInfo;
     }
 }
