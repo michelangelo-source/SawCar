@@ -20,6 +20,7 @@
 
 
     function registerUser(){
+      //walidacja danych
       RegisterData={
         "name":document.getElementById("Name").value,
         "surname":document.getElementById("Surname").value,
