@@ -1,7 +1,7 @@
 
   
  async function postData(){
-     const res =await fetch("http://localhost:8080/users",{
+     const res =await fetch("http://localhost:8080/users/notoken/register",{
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
