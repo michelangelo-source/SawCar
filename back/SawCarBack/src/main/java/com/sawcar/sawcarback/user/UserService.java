@@ -31,8 +31,11 @@ public class UserService {
                 .email(request.getEmail())
                 .type(Type.USER)
                 .build();
+        System.out.println(user.getPassword());
+        System.out.println(user.getUsername());
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+        System.out.println(jwtToken);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 

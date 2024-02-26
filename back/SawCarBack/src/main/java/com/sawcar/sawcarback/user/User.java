@@ -1,7 +1,9 @@
 package com.sawcar.sawcarback.user;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
@@ -24,12 +28,14 @@ public class User implements UserDetails {
     private String surname;
 
 
-
     @Override
     public String getUsername() {
         return this.nickname;
     }
-
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -49,68 +55,13 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(type.name()));
     }
 
 
-    public void setName(String name) {
-        name = name;
-    }
-
-    public void setSurname(String surname) {
-        surname = surname;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-
-    public String getPassword() {
-        return password;
-    }
-
-
-
-    public void setId(long id) {
-        id = id;
-    }
-
-    public void setNickname(String nickname) {
-        nickname = nickname;
-    }
-
-    public void setEmail(String email) {
-        email = email;
-    }
-
-    public void setPassword(String password) {
-        password = password;
-    }
-
-    public void setType(String type) {
-        type = type;
-    }
 
 
 }
