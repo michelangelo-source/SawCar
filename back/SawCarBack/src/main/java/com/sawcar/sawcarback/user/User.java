@@ -1,6 +1,7 @@
 package com.sawcar.sawcarback.user;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Builder
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
@@ -20,6 +22,7 @@ public class User implements UserDetails {
     private Type type;
     private String name;
     private String surname;
+
 
 
     @Override
@@ -49,34 +52,6 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(type.name()));
-    }
-
-    public User(String nickname, String email, String password, String name, String surname) {
-        nickname = nickname;
-        email = email;
-        password = password;
-        name = name;
-        surname = surname;
-    }
-
-    public User(long id, String nickname, String email, String password, String type, String name, String surname) {
-        id = id;
-        nickname = nickname;
-        email = email;
-        password = password;
-        type = type;
-        name = name;
-        surname = surname;
-    }
-
-    public User(long Id, String Nickname, String email, String password) {
-        this.id = Id;
-        this.nickname = Nickname;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User() {
     }
 
 

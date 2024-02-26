@@ -1,34 +1,51 @@
 package com.sawcar.sawcarback.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sawcar.sawcarback.security.AuthenticationResponse;
+import com.sawcar.sawcarback.security.JWTService;
+import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
-    public RegisterInfo addUser(User user){
-        RegisterInfo registerInfo = new RegisterInfo();
-        //haszowanie hasła tutaj dorobic!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        Optional<User>userIsAdded= userRepository.findByEmailAndNickname(user.getEmail(),user.getNickname());
-        if(userIsAdded.isPresent()){
-            registerInfo.setAdded(false);
-            registerInfo.setComment("email or nickname taken");
-            return registerInfo;
-        }
+
+    public AuthenticationResponse addUser(RegisterRequest request) {
+        var user = User.builder()
+                .nickname(request.getNickname())
+                .name(request.getName())
+                .surname(request.getSurname())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .email(request.getEmail())
+                .type(Type.USER)
+                .build();
         userRepository.save(user);
-        registerInfo.setAdded(true);
-        registerInfo.setComment("succeed");
-        return registerInfo;
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+    public AuthenticationResponse loginUser(LoginRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder().token(jwtToken).build();
+
     }
 }

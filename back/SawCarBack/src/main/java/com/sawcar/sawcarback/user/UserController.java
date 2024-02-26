@@ -1,9 +1,9 @@
 package com.sawcar.sawcarback.user;
 
+import com.sawcar.sawcarback.security.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -13,13 +13,15 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
+    @PostMapping("/notoken/register")
     @CrossOrigin
-    @GetMapping
-    public List<User> getUsers(  ){
-        return userService.getUsers();}
-    @PostMapping
+    public ResponseEntity<AuthenticationResponse>  addUser(@RequestBody RegisterRequest request){
+        return ResponseEntity.ok(userService.addUser(request));
+    }
+    @PostMapping("/notoken/login")
     @CrossOrigin
-    public RegisterInfo addUser(@RequestBody User user){
-        return(userService.addUser(user));
+    public ResponseEntity<AuthenticationResponse>  loginUser(@RequestBody LoginRequest request){
+        return ResponseEntity.ok(userService.loginUser(request));
     }
 }
