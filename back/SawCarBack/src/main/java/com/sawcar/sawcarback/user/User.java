@@ -1,44 +1,79 @@
 package com.sawcar.sawcarback.user;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
-    private long Id;
-    private String Nickname;
-    private String Email;
-    private String Password;
+    private long id;
+    private String nickname;
+    private String email;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private Type type;
+    private String name;
+    private String surname;
 
-    private String Type="User";
-    private String Name;
-    private String Surname;
+
+    @Override
+    public String getUsername() {
+        return this.nickname;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(type.name()));
+    }
 
     public User(String nickname, String email, String password, String name, String surname) {
-        Nickname = nickname;
-        Email = email;
-        Password = password;
-        Name = name;
-        Surname = surname;
+        nickname = nickname;
+        email = email;
+        password = password;
+        name = name;
+        surname = surname;
     }
 
     public User(long id, String nickname, String email, String password, String type, String name, String surname) {
-        Id = id;
-        Nickname = nickname;
-        Email = email;
-        Password = password;
-        Type = type;
-        Name = name;
-        Surname = surname;
+        id = id;
+        nickname = nickname;
+        email = email;
+        password = password;
+        type = type;
+        name = name;
+        surname = surname;
     }
 
-    public User(long Id, String Nickname, String email, String password, String type) {
-        this.Id = Id;
-        this.Nickname = Nickname;
-        this.Email = email;
-        this.Password = password;
-        this.Type = type;
+    public User(long Id, String Nickname, String email, String password) {
+        this.id = Id;
+        this.nickname = Nickname;
+        this.email = email;
+        this.password = password;
     }
 
     public User() {
@@ -46,61 +81,60 @@ public class User {
 
 
     public void setName(String name) {
-        Name = name;
+        name = name;
     }
 
     public void setSurname(String surname) {
-        Surname = surname;
+        surname = surname;
     }
 
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public String getSurname() {
-        return Surname;
+        return surname;
     }
 
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public String getNickname() {
-        return Nickname;
+        return nickname;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
+
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
-    public String getType() {
-        return Type;
-    }
+
 
     public void setId(long id) {
-        Id = id;
+        id = id;
     }
 
     public void setNickname(String nickname) {
-        Nickname = nickname;
+        nickname = nickname;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        email = email;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        password = password;
     }
 
     public void setType(String type) {
-        Type = type;
+        type = type;
     }
 
 
