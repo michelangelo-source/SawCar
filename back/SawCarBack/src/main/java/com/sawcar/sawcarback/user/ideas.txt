@@ -1,3 +1,4 @@
-modify user email name password etc
-deleteing
-add privilges user admin moderator
+deleteing own account by user
+changin own data by user
+admin panel to users
+moder panel to users
