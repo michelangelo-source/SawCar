@@ -24,6 +24,10 @@ async function postData(){
       }
       postData().then((data)=>{
       console.log(data)
+      ciasto="Bearer "+data.token
+
+      document.cookie =ciasto
+      console.log(data.token)
       });
 
 
