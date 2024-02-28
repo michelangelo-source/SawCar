@@ -1,5 +1,6 @@
 package com.sawcar.sawcarback.security;
 
+import com.sawcar.sawcarback.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

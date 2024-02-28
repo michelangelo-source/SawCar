@@ -4,7 +4,8 @@ import com.sawcar.sawcarback.security.AuthenticationResponse;
 import com.sawcar.sawcarback.security.JWTService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,13 +39,9 @@ public class UserService {
     }
 
     public AuthenticationResponse loginUser(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        User user =new User();
+        user= (User) userRepository.findByEmail(request.getEmail()).orElseThrow();
+        ////////sprawdzanie hasla
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
 

@@ -29,7 +29,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable
                 ).authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/users/notoken/**")
+                        .requestMatchers("/users/notoken/login")
+                        .permitAll()
+                        .requestMatchers("/users/notoken/register")
                         .permitAll()
                         .requestMatchers("/admin/**").hasAnyRole(ADMIN.name(), MODERATOR.name())
                         .requestMatchers(GET, "/admin/users").hasAnyAuthority(ADMIN_READ.name(), MODERATOR_READ.name())

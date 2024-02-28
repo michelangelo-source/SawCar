@@ -8,11 +8,11 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT u FROM User u WHERE u.email=?1 or u.nickname=?2")
-    Optional<User>findByEmailAndNickname(String email,String nickname);
 
-    Optional<User> findByEmail(String email);
+    @Query("SELECT u FROM User u WHERE u.nickname=?1")
+    Optional<User> findByNickname(String nickname);
 
-
+    @Query("SELECT u FROM User u WHERE u.email=?1")
+    Optional<Object> findByEmail(String email);
 }
 
