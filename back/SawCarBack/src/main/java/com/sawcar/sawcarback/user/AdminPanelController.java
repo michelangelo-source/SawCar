@@ -19,6 +19,7 @@ public class AdminPanelController {
     @GetMapping("/users")
     @PreAuthorize("hasAuthority('admin:read')")
     public List<User> getUsers(){
+        System.out.println("tu leci");
         return userService.getUsers();
     }
 }
