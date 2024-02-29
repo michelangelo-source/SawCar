@@ -3,7 +3,6 @@ id userid tresc zdjecie data MarkadID modelID generationID
 
 szukanie ludzi
 
-
 obserwowanie
 
 uzykownikID kogooberwujeuzytkownikID
