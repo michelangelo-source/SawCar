@@ -18,20 +18,17 @@ async function postData(){
    }
 
    function loginFun(){
+    //walidacja danych
     loginData={
         "email":document.getElementById("inputEmail").value,
         "password":document.getElementById("inputPassword").value
       }
       postData().then((data)=>{
-      console.log(data)
       ciasto="Bearer "+data.token
-
       document.cookie =ciasto
-      console.log(data.token)
+      window.location.replace("http://127.0.0.1:5500/front/pages/mainPage.html");
+      }).catch((err)=>{
+        alert("zle haslo lub login")
       });
 
-
-
-    console.log(document.getElementById("inputEmail").value)
-    console.log(document.getElementById("inputPassword").value)
 }

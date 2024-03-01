@@ -39,6 +39,4 @@ async function getData(){
   console.log(data)
   });
 }
-function ciastko(){
-  console.log(document.cookie)
-}
+
