@@ -24,8 +24,15 @@ async function postData(){
         "password":document.getElementById("inputPassword").value
       }
       postData().then((data)=>{
-      ciasto="Bearer "+data.token
-      document.cookie =ciasto
+        console.log(data)
+      tokenFull="Bearer "+data.token
+      sessionStorage.setItem("token",tokenFull);
+      sessionStorage.setItem("id",data.id);
+      sessionStorage.setItem("emial",data.emial);
+      sessionStorage.setItem("nickname",data.nickname);
+      sessionStorage.setItem("name",data.name);
+      sessionStorage.setItem("surname",data.surname);
+      sessionStorage.setItem("CBF",data.can_be_found);
       window.location.replace("http://127.0.0.1:5500/front/pages/mainPage.html");
       }).catch((err)=>{
         alert("zle haslo lub login")
