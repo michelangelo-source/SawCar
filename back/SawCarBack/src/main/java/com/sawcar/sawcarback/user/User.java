@@ -3,6 +3,7 @@ package com.sawcar.sawcarback.user;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,33 @@ public class User implements UserDetails {
     private String name;
     private String surname;
 
+    @Column(name = "can_be_found")
+    private boolean canBeFound=true;
+
+
+    public long getId() {
+        return id;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public boolean isCanBeFound() {
+        return canBeFound;
+    }
 
     @Override
     public String getUsername() {

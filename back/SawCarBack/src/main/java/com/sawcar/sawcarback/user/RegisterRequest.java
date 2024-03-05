@@ -16,4 +16,5 @@ public class RegisterRequest {
     private String password;
     private String nickname;
     private Type type;
+    private boolean canBeFind;
 }

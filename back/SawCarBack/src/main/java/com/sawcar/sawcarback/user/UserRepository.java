@@ -14,5 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.email=?1")
     Optional<Object> findByEmail(String email);
+@Query("SELECT u.nickname FROM User u WHERE u.canBeFound=true and u.nickname=?1")
+    String CanBeFollow(String name);
 }
 

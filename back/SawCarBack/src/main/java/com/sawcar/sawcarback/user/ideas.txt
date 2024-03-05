@@ -1,5 +1,5 @@
 deleteing own account by user
 changing own data by user
-add column "can user be found"
+
 admin panel to users everything as moderator and adding moderaor permissions
 moder panel to users everything as user but to everyone + adding cars

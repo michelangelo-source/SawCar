@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/users")
 public class UserController {
@@ -16,12 +18,17 @@ public class UserController {
 
     @PostMapping("/notoken/register")
     @CrossOrigin
-    public ResponseEntity<AuthenticationResponse>  addUser(@RequestBody RegisterRequest request){
-        return ResponseEntity.ok(userService.addUser(request));
+    public void addUser(@RequestBody RegisterRequest request){
+        userService.addUser(request);
     }
     @PostMapping("/notoken/login")
     @CrossOrigin
-    public ResponseEntity<AuthenticationResponse>  loginUser(@RequestBody LoginRequest request){
-        return ResponseEntity.ok(userService.loginUser(request));
+    public LoginResponse  loginUser(@RequestBody LoginRequest request){
+        return userService.loginUser(request);
+    }
+    @GetMapping("{name}/{userid}")
+    @CrossOrigin
+    public String CanBefFollow(@PathVariable("name")String name,@PathVariable("userid") int id ){
+        return userService.canBeFollow(name);
     }
 }
