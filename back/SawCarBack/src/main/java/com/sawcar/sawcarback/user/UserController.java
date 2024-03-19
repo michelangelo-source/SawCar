@@ -28,7 +28,7 @@ public class UserController {
     }
     @GetMapping("{name}/{userid}")
     @CrossOrigin
-    public String CanBefFollow(@PathVariable("name")String name,@PathVariable("userid") int id ){
-        return userService.canBeFollow(name);
+    public SearchRespone CanBefFollow(@PathVariable("name")String name,@PathVariable("userid") long id ){
+        return userService.canBeFollow(name,id);
     }
 }

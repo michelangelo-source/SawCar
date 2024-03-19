@@ -1,6 +1,8 @@
 package com.sawcar.sawcarback.user;
 
 import com.sawcar.sawcarback.security.JWTService;
+import com.sawcar.sawcarback.seen.Follow;
+import com.sawcar.sawcarback.seen.FollowService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +15,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class UserService {
+    private final FollowService followService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JWTService jwtService;
@@ -38,7 +41,7 @@ public class UserService {
 
     public LoginResponse loginUser(LoginRequest request) {
 
-         var user= (User) userRepository.findByEmail(request.getEmail()).orElseThrow();
+        var user = (User) userRepository.findByEmail(request.getEmail()).orElseThrow();
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(),
@@ -47,7 +50,7 @@ public class UserService {
                 )
         );
 
-        LoginResponse loginResponse=new LoginResponse();
+        LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtService.generateToken(user));
         loginResponse.setNickname(user.getUsername());
         loginResponse.setEmial(user.getEmail());
@@ -63,9 +66,21 @@ public class UserService {
         return userRepository.findByNickname(name);
     }
 
-    public String canBeFollow(String name) {
-        String nameFinal=userRepository.CanBeFollow(name);
-        System.out.println(nameFinal);
-        return  nameFinal;
+    public SearchRespone canBeFollow(String name, long id) {
+        Optional<String> nickname = userRepository.CanBeFollow(name).orElseThrow().describeConstable();
+        SearchRespone odp = new SearchRespone();
+        if (nickname.isPresent()) {
+            String nick = nickname.get();
+            odp.setNickname(nick);
+            Optional<User> FollowedUser=userRepository.findByNickname(nick);
+            User FollowedUserID= FollowedUser.get();
+            Follow toChcek = new Follow(id, FollowedUserID.getId());
+            if (followService.alreadyFollow(toChcek)!=0) {
+                odp.setAlreadyFollow(true);
+            } else {
+                odp.setAlreadyFollow(false);
+            }
+        }
+        return odp;
     }
 }

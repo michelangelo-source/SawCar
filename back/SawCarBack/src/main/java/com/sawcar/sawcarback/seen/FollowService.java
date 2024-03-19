@@ -10,4 +10,7 @@ public class FollowService {
     public void follow(Follow follow) {
         followRepository.save(follow);
     }
+    public long alreadyFollow(Follow follow){
+       return followRepository.isAlreadyFollowed(follow.getUserId(),follow.getWhoUserFollowsId());
+    }
 }
