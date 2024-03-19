@@ -24,7 +24,6 @@ async function postData(){
         "password":document.getElementById("inputPassword").value
       }
       postData().then((data)=>{
-        console.log(data)
       tokenFull="Bearer "+data.token
       sessionStorage.setItem("token",tokenFull);
       sessionStorage.setItem("id",data.id);

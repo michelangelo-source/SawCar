@@ -12,7 +12,7 @@ async function getUser(url){
    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
    
   })
- return res.body.getReader();
+ return res.json();
  }
 async function getData(){
     const res =await fetch("http://localhost:8080/seen",{
@@ -58,5 +58,7 @@ async function getData(){
       url="http://localhost:8080/users/"+document.getElementById("Nickname").value+"/"+sessionStorage.getItem("id")
   getUser(url).then((data)=>{
     console.log(data)
-  })
+  }).catch((err)=>{
+    alert("nie ma takiego uzytkownika")
+  });
 }
