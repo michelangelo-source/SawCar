@@ -67,20 +67,11 @@ public class UserService {
     }
 
     public SearchRespone canBeFollow(String name, long id) {
-        Optional<String> nickname = userRepository.CanBeFollow(name).orElseThrow().describeConstable();
+        User user = userRepository.CanBeFollow(name).orElseThrow();
         SearchRespone odp = new SearchRespone();
-        if (nickname.isPresent()) {
-            String nick = nickname.get();
-            odp.setNickname(nick);
-            Optional<User> FollowedUser=userRepository.findByNickname(nick);
-            User FollowedUserID= FollowedUser.get();
-            Follow toChcek = new Follow(id, FollowedUserID.getId());
-            if (followService.alreadyFollow(toChcek)!=0) {
-                odp.setAlreadyFollow(true);
-            } else {
-                odp.setAlreadyFollow(false);
-            }
-        }
+        odp.setNickname(user.getNickname());
+        Follow toChcek = new Follow(id, user.getId());
+        odp.setAlreadyFollow(followService.alreadyFollow(toChcek) != 0);
         return odp;
     }
 }
