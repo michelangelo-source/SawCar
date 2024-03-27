@@ -3,80 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Rejestracja</title>
+    <title>SawCar</title>
     <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/register.css">
 </head>
 <body>
-  
-
- 
-  <div id="navbar" class="row"><a href="./index.html"><button type="button" class="btn btn-primary mt-3 " >powrót</button></a></div>
-    <div > 
-    <div class="row">
-      <div class="col">
-          
-        </div>
-    <div class="col d-flex justify-content-center" >
-      <h1>Register</h1>
-    </div>
-    <div class="col">
-          
-    </div>
-  </div>
-        <div class="row">
-            <div class="col">
-                
-              </div>
-          <div class="col">
-            <input id="Name" type="text" class="form-control" placeholder="Name">
-          </div>
-          <div class="col">
-            <input id="Surname" type="text" class="form-control" placeholder="Surname">
-          </div>
-          <div class="col">
-                
-          </div>
-        </div>
-        <div class="row">
-            <div class="col">
-              </div>
-          <div class="col">
-            <input id="Nickname" type="text" class="form-control" placeholder="Nickname">
-          </div>
-          <div class="col">
-            
-          </div>
-          <div class="col">
-          </div>
-        </div>
-        <div class="row">
-            <div class="col">
-              </div>
-          <div class="col">
-            <input id="Email" type="email" class="form-control" placeholder="email@domain.com">
-          </div>
-          <div class="col">
-            
-          </div>
-          <div class="col">
-          </div>
-        </div>
-        <div class="row">
-            <div class="col">
-              </div>
-          <div class="col">
-            <input id="Password" type="password" class="form-control" placeholder="password">
-          </div>
-          <div class="col d-flex justify-content-end">
-            <button  class="btn btn-primary" onclick="registerUser()">zarejestruj</button>
-          </div>
-          <div class="col">
-            
-          </div>
-        </div>
+  <header>
+      <a id="logo" href="./index.html"><img src="../img/logo.png" alt="logo"></a>
+  </header>
+  <main>
+    <div id="registerForm"> 
+      <div id="registerInputs">
+        <input id="Name" type="text" class="inputs" placeholder="Name">
+        <input id="Surname" type="text" class="inputs" placeholder="Surname">
+        <input id="Nickname" type="text" class="inputs" placeholder="Nickname">
+        <input id="Email" type="email" class="inputs" placeholder="email@domain.com">
+        <input id="Password" type="password" class="inputs" placeholder="password">
+        <div class="stdBtn" onclick="registerUser()">zarejestruj</div>
       </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-      <script src="../scripts/registerScripts.js"></script>
+      <div >
+        <label for="Name">Name: </label>
+        <br>
+        <label for="Surname">Surname: </label>
+        <br>
+        <label for="Nickname">Nickname: </label>
+        <br>
+        <label for="Email">Email: </label>
+        <br>
+        <label for="Password">Password: </label>
+      </div>
+    </div>  
+  </main>
+  <footer>
+    <p>Tomasz Gacek 2024</p>
+  </footer>
+  <script src="../scripts/registerScripts.js"></script>
   </body>
 </html>

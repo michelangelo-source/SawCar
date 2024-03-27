@@ -1,0 +1,3 @@
+token revoke every request logout destroying tokepost refresh token co kliknięcie na endpoint tutaj fetch z frontu
+
+tokenid userid token generate_date

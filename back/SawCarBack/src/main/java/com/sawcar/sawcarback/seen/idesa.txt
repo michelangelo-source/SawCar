@@ -1,12 +1,13 @@
 POSTY
 id userid tresc zdjecie data MarkadID modelID generationID
 
-szukanie ludzi
 
 obserwowanie
 
 uzykownikID kogooberwujeuzytkownikID
 
 przegladnai danego auta
+
 przegladania danego uzytkownika
+
 przegladnie ogolne obserwowanych

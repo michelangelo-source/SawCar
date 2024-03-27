@@ -1,0 +1,13 @@
+#registerForm{
+    display: flex;
+    flex-flow:row-reverse;
+    height: 100%;
+    width: 60%;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+#registerInputs{
+    display: flex;
+    flex-flow: column;
+}

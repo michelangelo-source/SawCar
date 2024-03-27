@@ -1,14 +1,14 @@
 
 ###MARKI
 id marka
-
+carbrand
 
 
 ###modele
 
 id markaid model
-
+carmodel
 
 ##generacja
-
-id markaID moelID generacja
+cargeneration
+id markaID modelID generacja
