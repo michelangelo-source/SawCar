@@ -1,3 +1,7 @@
-token revoke every request logout destroying tokepost refresh token co kliknięcie na endpoint tutaj fetch z frontu
+token logout destroying
 
-tokenid userid token generate_date
+tokenpost refresh token onload everypage
+
+mainPage tokenrefresh every hour
+
+tokenid userid token generate_date isActive

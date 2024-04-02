@@ -26,6 +26,7 @@ public class UserService {
     }
 
     public void addUser(RegisterRequest request) {
+        //walidacja danych
         var user = User.builder()
                 .nickname(request.getNickname())
                 .name(request.getName())
