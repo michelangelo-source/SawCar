@@ -33,7 +33,7 @@ async function postData(){
       sessionStorage.setItem("surname",data.surname);
       sessionStorage.setItem("CBF",data.can_be_found);
       window.location.replace("http://127.0.0.1:5500/front/pages/mainPage.html");
-      }).catch((err)=>{
+      }).catch(()=>{
         alert("zle haslo lub login")
       });
 

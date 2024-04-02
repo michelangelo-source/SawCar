@@ -1,0 +1,41 @@
+.headBtn{
+    border-radius: 10px;
+    display: flex;
+    margin-top: 1%;
+    background-color: white;
+    font-size: 18pt;
+    font-family: 'Courier New', Courier, monospace ;
+    color: black;
+    align-items: center;
+    justify-content: center;
+}
+#logoDiv{
+    display: flex;
+    width: 15%;
+    height: 100%;
+}
+#searchUsrDiv{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+#Nickname{
+    font-size: 18pt;
+}
+#searchUser{
+    margin: 0 ;
+   display: flex;
+   align-items: center;
+   justify-content: center; 
+}
+#leftSideBtnsDiv{
+    width: 15%;
+    height: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
