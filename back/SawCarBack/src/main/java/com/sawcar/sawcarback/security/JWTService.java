@@ -1,11 +1,13 @@
 package com.sawcar.sawcarback.security;
 
 import com.sawcar.sawcarback.user.User;
+import com.sawcar.sawcarback.user.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.data.domain.Example;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,15 @@ import java.util.function.Function;
 
 @Service
 public class JWTService {
+    private final TokenRepository tokenRepository;
+    private final UserRepository userRepository;
     private static final String SECRET_KEY="14343209b99d1c4a7a23ba01cd1944b5b775b6fc491664ac722612d08b54bdbb";
+
+    public JWTService(TokenRepository tokenRepository, UserRepository userRepository) {
+        this.tokenRepository = tokenRepository;
+        this.userRepository = userRepository;
+    }
+
     public String extractUsername(String token){
         return extractClaim(token,Claims::getSubject);
     }
@@ -35,11 +45,12 @@ public class JWTService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails){
+
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()))&&!isTokenExpierd(token);
+        return (username.equals(userDetails.getUsername())&&!isTokenExpired(token)&&tokenRepository.isValid(token));
     }
 
-    private boolean isTokenExpierd(String token) {
+    private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
@@ -65,11 +76,28 @@ public class JWTService {
     }
     public String generateToken(
             UserDetails userDetails){
-        return Jwts.builder()
+        var jwt= Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
+        this.deactivateTokens(userDetails.getUsername());
+        Token token=new Token(userRepository.getUserId(userDetails.getUsername()),jwt,new Date(),true);
+        tokenRepository.save(token);
+        return jwt;
+    }
+    public void deactivateTokens(String nickname){
+        System.out.println(nickname);
+        Long id= userRepository.getUserId(nickname);
+        System.out.println(id);
+        tokenRepository.deactiveAll(id);
+    }
+
+    public String renewToken(String token) {
+        var user = User.builder()
+                .nickname(this.extractUsername(token))
+                .build();
+        return generateToken(user);
     }
 }

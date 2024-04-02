@@ -1,7 +1,1 @@
-token logout destroying
-
-tokenpost refresh token onload everypage
-
-mainPage tokenrefresh every hour
-
-tokenid userid token generate_date isActive
+front refreshing token
