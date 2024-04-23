@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SawCar</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../css/carEditor.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <a id="logo" href="./index.html"><img src="../img/carLogo.png" alt="logo"></a>
+    </header>
+    <main>
+        <div id="content">
+            <div id="MainContent">
+
+                <div id="leftColumn">
+                    <input type="text" class="inputs" id="carBrandInput" placeholder="marka">
+                    <br>
+                    <input type="text" class="inputs" id="carModelInput" placeholder="model">
+                    <br>
+                    <input type="number" class="inputs" id="generationInput" value="0" min="0">
+                    <br>
+                    <input type="number" class="inputs" id="startYearInput" value="2010" min="1886">
+                    <br>
+                    <input type="number" class="inputs" id="endYearInput" value="2020" min="1886" >
+                    <br>
+                    <div  class="stdBtn" onclick="">Dodaj</div>  
+                </div>
+
+                <div id="rightColumn">
+                    <select name="carModelSelect" class="inputs" id="carModelSelect"  >
+                    </select>
+                    <select name="carBrandSelect" class="inputs" id="carBrandSelect" >
+                    </select>
+                    <select name="carGenerationSelect" class="inputs" id="carGenerationSelect" >
+                    </select>
+                    <div  class="stdBtn" onclick="">Usun</div>  
+                </div>
+                
+            </div>
+        </div>
+    </main>
+        
+    <footer>
+        <p>Tomasz Gacek 2024</p>
+    </footer>
+        
+    <script src="../scripts/loginScript.js"></script>
+    </body>
+   
+</html>

@@ -1,0 +1,8 @@
+#MainContent{
+    display: flex;
+    flex-flow: row;
+}
+#rightColumn{
+    display: flex;
+    flex-flow: column;
+}
