@@ -1,14 +1,14 @@
 
 ###MARKI
 id marka
-carbrand
+car_brand
 
 
 ###modele
 
 id markaid model
-carmodel
+car_model
 
 ##generacja
-cargeneration
-id markaID modelID generacja
+car_generation
+id markaID modelID generacja start_year end_year

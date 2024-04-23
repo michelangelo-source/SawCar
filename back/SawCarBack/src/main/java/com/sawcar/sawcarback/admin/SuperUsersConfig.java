@@ -1,5 +1,7 @@
-package com.sawcar.sawcarback.user;
+package com.sawcar.sawcarback.admin;
 
+import com.sawcar.sawcarback.user.User;
+import com.sawcar.sawcarback.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

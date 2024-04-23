@@ -88,16 +88,14 @@ public class JWTService {
         return jwt;
     }
     public void deactivateTokens(String nickname){
-        System.out.println(nickname);
         Long id= userRepository.getUserId(nickname);
-        System.out.println(id);
         tokenRepository.deactiveAll(id);
     }
 
-    public String renewToken(String token) {
+    public String renewToken(String nickname) {
         var user = User.builder()
-                .nickname(this.extractUsername(token))
+                .nickname(nickname)
                 .build();
-        return generateToken(user);
+        return "{\"token\":\""+generateToken(user)+"\"}";
     }
 }

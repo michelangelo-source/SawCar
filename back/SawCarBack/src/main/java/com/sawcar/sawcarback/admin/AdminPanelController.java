@@ -1,5 +1,7 @@
-package com.sawcar.sawcarback.user;
+package com.sawcar.sawcarback.admin;
 
+import com.sawcar.sawcarback.user.User;
+import com.sawcar.sawcarback.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +16,7 @@ import java.util.List;
 @PreAuthorize("hasRole('ADMIN')")
 @RequestMapping(path = "/admin")
 public class AdminPanelController {
-    private final  UserService userService;
+    private final UserService userService;
     @CrossOrigin
     @GetMapping("/users")
     @PreAuthorize("hasAuthority('admin:read')")

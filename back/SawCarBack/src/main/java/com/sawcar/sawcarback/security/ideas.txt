@@ -1,1 +1,1 @@
-front refreshing token
+zredukować zapytania do bazy

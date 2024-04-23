@@ -15,12 +15,13 @@ public class TokenController {
 
     @PostMapping
     @CrossOrigin
-    public String renewToken(@RequestBody String token){
-        return jwtService.renewToken(token);
+    public String renewToken(@RequestBody String nickname){
+        System.out.println(nickname);
+        return jwtService.renewToken(nickname);
     }
     @DeleteMapping("{nickname}")
     @CrossOrigin
-    public void deactiveToken(@PathVariable("nickname")String nickname){
+    public void deactivateToken(@PathVariable("nickname")String nickname){
         jwtService.deactivateTokens(nickname);
     }
 }
