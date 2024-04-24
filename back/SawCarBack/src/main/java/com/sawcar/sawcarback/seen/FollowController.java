@@ -13,12 +13,15 @@ public class FollowController {
         this.followService = followService;
     }
 
-    @PostMapping
+    @PostMapping()
     @CrossOrigin
-    public void followUser(@RequestBody Follow follow){
-        followService.follow(follow);
+    public void followUser(@RequestBody FollowRequest followRequest){
+       followService.follow(followRequest);
     }
-    @DeleteMapping("{UserId}/{UnFollowedUserid}")
+    @DeleteMapping("{User}/{UnFollowedUser}")
     @CrossOrigin
-    public void unfollow(){};
+    public void unfollow(@PathVariable("User")String user,@PathVariable("UnFollowedUser") String unfollwedUser){
+        FollowRequest followRequest = new FollowRequest(user,unfollwedUser);
+        followService.unfollow(followRequest);
+    }
 }

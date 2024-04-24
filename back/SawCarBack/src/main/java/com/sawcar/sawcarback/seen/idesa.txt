@@ -2,10 +2,6 @@ POSTY
 id userid tresc zdjecie data MarkadID modelID generationID
 
 
-obserwowanie
-
-uzykownikID kogooberwujeuzytkownikID
-
 przegladnai danego auta
 
 przegladania danego uzytkownika

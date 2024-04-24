@@ -4,7 +4,7 @@ deleteing own account by user po tokenie
 changing own data by user
 
 validate data from front (register)
-returning to front why adding user fail (is nickname or email taken)
+
 
 admin panel to users everything as moderator and adding moderaor permissions
 moder panel to users everything as user but to everyone + adding cars
