@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2024 at 08:59 PM
+-- Generation Time: Apr 26, 2024 at 11:07 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -21,6 +21,19 @@ SET time_zone = "+00:00";
 -- Database: `sawcar`
 --
 
+DELIMITER $$
+--
+-- Procedury
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SPAddCar` (IN `brand` VARCHAR(255), IN `model` VARCHAR(255), IN `generation` INT, IN `startYear` YEAR, IN `endYear` YEAR)   BEGIN
+INSERT INTO car_brand SELECT NULL,brand WHERE NOT EXISTS ( SELECT 1 FROM car_brand WHERE Brand = brand );
+INSERT INTO car_model SELECT NULL,(SELECT car_brand.Id FROM car_brand WHERE car_brand.Brand=brand),model WHERE NOT EXISTS ( SELECT 1 FROM car_model WHERE Model = model );
+
+INSERT INTO car_generation SELECT NULL,(SELECT car_brand.Id FROM car_brand WHERE car_brand.Brand=brand),(SELECT car_model.Id FROM car_model WHERE car_model.Model=model),generation,startYear,endYear WHERE NOT EXISTS ( SELECT 1 FROM car_generation WHERE car_generation.Id=generation AND car_generation.Brand_Id=(SELECT car_brand.Id FROM car_brand WHERE car_brand.Brand=brand) AND car_generation.Model_Id= (SELECT car_model.Id FROM car_model WHERE car_model.Model=model));
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -31,6 +44,13 @@ CREATE TABLE `car_brand` (
   `Id` double NOT NULL,
   `Brand` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `car_brand`
+--
+
+INSERT INTO `car_brand` (`Id`, `Brand`) VALUES
+(1, 'Fiat');
 
 -- --------------------------------------------------------
 
@@ -47,6 +67,14 @@ CREATE TABLE `car_generation` (
   `End_Year` year(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `car_generation`
+--
+
+INSERT INTO `car_generation` (`Id`, `Brand_Id`, `Model_Id`, `Ganeration`, `Start_Year`, `End_Year`) VALUES
+(1, 1, 1, 1, '2015', '2024'),
+(3, 1, 1, 4, '2015', '2024');
+
 -- --------------------------------------------------------
 
 --
@@ -58,6 +86,13 @@ CREATE TABLE `car_model` (
   `Brand_Id` double NOT NULL,
   `Model` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `car_model`
+--
+
+INSERT INTO `car_model` (`Id`, `Brand_Id`, `Model`) VALUES
+(1, 1, 'Tipo');
 
 -- --------------------------------------------------------
 
@@ -76,7 +111,8 @@ CREATE TABLE `follows` (
 --
 
 INSERT INTO `follows` (`ID`, `UserID`, `Followed_UserdID`) VALUES
-(2, 2, 4);
+(4, 2, 4),
+(5, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -136,7 +172,30 @@ INSERT INTO `tokens` (`ID`, `userID`, `token`, `generate_date`, `is_active`) VAL
 (37, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMzg5NDM4OSwiZXhwIjoxNzEzODk1ODI5fQ.I4C1qaLFaP2B91EVIPqqTgFP5ceHr-SfiQR9jJY_V-o', '2024-04-23', 0),
 (38, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMzg5NDQzMywiZXhwIjoxNzEzODk1ODczfQ.QRJB2CtQmAPldVxraxfRPBKPvNlyI__HW6cxKHkPFbU', '2024-04-23', 0),
 (39, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMzg5NDQzNCwiZXhwIjoxNzEzODk1ODc0fQ.ZMwCdcxlZQETLYaLDPS-ip-VkUoopgrM0GZ0vZN4Dwo', '2024-04-23', 0),
-(40, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMzg5NDQ0NywiZXhwIjoxNzEzODk1ODg3fQ.UW1oIwb1K3trmAzQmf_Cm2TcJWsZjfdAZUGj41RcC20', '2024-04-23', 0);
+(40, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMzg5NDQ0NywiZXhwIjoxNzEzODk1ODg3fQ.UW1oIwb1K3trmAzQmf_Cm2TcJWsZjfdAZUGj41RcC20', '2024-04-23', 0),
+(41, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MDk2NywiZXhwIjoxNzE0MDYyNDA3fQ.q26AOrrQVSJmb3R6mbJc4fkW_ovVM4IoIpU4j8_AsE0', '2024-04-25', 0),
+(42, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MTAxMSwiZXhwIjoxNzE0MDYyNDUxfQ.99Xem6lYqpJx-tpIFPu_fumraGMFs8-3RsUwthXupB4', '2024-04-25', 0),
+(43, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MTA4MCwiZXhwIjoxNzE0MDYyNTIwfQ.7hR6olUVh6joEwffUN0V-q6vAsNRCMILKHABCJovQuc', '2024-04-25', 0),
+(44, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MTIwMSwiZXhwIjoxNzE0MDYyNjQxfQ.UMK2FHLD_mifn6cfB6xHSpIUhmM7SRC37pZHa0S6qiY', '2024-04-25', 0),
+(45, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MTI5MCwiZXhwIjoxNzE0MDYyNzMwfQ.s2X6Wa3b3Sn9tE7kRysjWjafgamIYyC4eib0G9Cku2k', '2024-04-25', 0),
+(46, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MTM5OCwiZXhwIjoxNzE0MDYyODM4fQ.zbPxez4v0Dwkwf5HtMdTjKapqdJ5JiTPAJHHeYig6aw', '2024-04-25', 0),
+(47, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MTQ1MiwiZXhwIjoxNzE0MDYyODkyfQ.tH5wMY3xQefws3TpQEXeEnzqtgaGCdfUfbTF6-SJyaw', '2024-04-25', 0),
+(48, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MTQ4NCwiZXhwIjoxNzE0MDYyOTI0fQ.TuWS6n9SvRuK2HC8PZUxcGiJaJqzc1usijk5cbO8bvc', '2024-04-25', 0),
+(49, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MjA0MCwiZXhwIjoxNzE0MDYzNDgwfQ.GvlYz-yKdI4PKA8aDe3NrvcssH7s_3EOqfmOM5jgVgE', '2024-04-25', 0),
+(50, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MjEyNCwiZXhwIjoxNzE0MDYzNTY0fQ.PjZZInCnyQqwAZPN-mt4ZOsdzNgw49UF3PxdIfmXowA', '2024-04-25', 0),
+(51, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MjI2MCwiZXhwIjoxNzE0MDYzNzAwfQ.OJaKXlXsYT6EJUY48fpjmEUS2Ek0_GZEkWQ66-WqYCY', '2024-04-25', 0),
+(52, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MjYxNiwiZXhwIjoxNzE0MDY0MDU2fQ.J-hSN9O-N-01ymYBx9Wu_HVFsdJegUCDToPY-XVjMd8', '2024-04-25', 0),
+(53, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MjcwOCwiZXhwIjoxNzE0MDY0MTQ4fQ.wb-90Ca1vzdESHSpNGk3YdyHhBJiZ-8Rnr_JGwTM6Dc', '2024-04-25', 0),
+(54, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2Mjc5NSwiZXhwIjoxNzE0MDY0MjM1fQ.LCPWazfn0gA0qsn9WuKYlZZh-z6N3snj7QBana8TwMw', '2024-04-25', 0),
+(55, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MjkxMiwiZXhwIjoxNzE0MDY0MzUyfQ.qRw6WMn2xwAwfsFmfwgIEcB0_gqOrTj0c4lWyNlMDO4', '2024-04-25', 0),
+(56, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2Mjk1OSwiZXhwIjoxNzE0MDY0Mzk5fQ.gljFZmj62pgEScaKQWHOUZMIKAls0Azovt-7L_dLwUs', '2024-04-25', 0),
+(57, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MzA3MCwiZXhwIjoxNzE0MDY0NTEwfQ.-JiDVv_FQ4lnW-9Gqbh5qHucHh9UJLSSCZBuz_hUlcg', '2024-04-25', 0),
+(58, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MzQ5NiwiZXhwIjoxNzE0MDY0OTM2fQ.n4TtEM3kpx-DU7jDgp9cDAX0I7fv0m4uKHoQp5CwchY', '2024-04-25', 0),
+(59, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MzcwNywiZXhwIjoxNzE0MDY1MTQ3fQ._PE1ErQLdOVvg8c6CDZzzngbazUwA7UZFMiARdKD09Q', '2024-04-25', 0),
+(60, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2Mzc2MiwiZXhwIjoxNzE0MDY1MjAyfQ.gnOMPSpdDavk909_1JcbUkkIxxoT_hsexyknvUk26Zk', '2024-04-25', 0),
+(61, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MzgwOCwiZXhwIjoxNzE0MDY1MjQ4fQ.vrAnsG8NRPI9rZjcm9hdP-uQH8qc1wMWXOnuLW0Ekiw', '2024-04-25', 0),
+(62, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MzgzOSwiZXhwIjoxNzE0MDY1Mjc5fQ.fuTnw2geUHEPNCTf7w0kZfripjsbcFK93tfT8iFjwXA', '2024-04-25', 0),
+(63, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2NzQ4MiwiZXhwIjoxNzE0MDY4OTIyfQ.AaEr0W3o-6gRdLGa-pitcezi1f03ty0X_mfuil3qVsI', '2024-04-25', 1);
 
 -- --------------------------------------------------------
 
@@ -166,7 +225,8 @@ INSERT INTO `users` (`ID`, `NickName`, `Email`, `Password`, `Type`, `name`, `sur
 (4, 'Guido', 'tgacek@sawcar.pl', '$2a$10$.tjx6/nZL7.4uRcwBKSd4u0MbE3sDYYhIQ0Amy6pWcIl0l29aRpou', 'USER', 'Tomek', 'Gacek', 1),
 (6, 'tomek', 'tomek@sawcar.pl', '$2a$10$5pp/G9cKvJfy3SMQv9HUje17j9ZVSC8e5pn/M9GrtfuWtW5P71tCS', 'USER', 'tomek', 'tomek', 1),
 (7, 'dar3cz3q', 'dar@gmail.com', '$2a$10$TS4A9yoNMytFSwBLtm9U0.grUUOPWIs/eyk/Z5tkR.PHfEnvZHG6m', 'USER', 'Darek', 'Homa', 1),
-(8, 'Guido2', 'tgacek2@sawcar.pl', '$2a$10$FpS6yZW0F32Gue/u6pJJqet2/kBZpLcBwDPuMNXvuO3VObN4lnWY6', 'USER', 'Tomek', 'Gacek', 1);
+(8, 'Guido2', 'tgacek2@sawcar.pl', '$2a$10$FpS6yZW0F32Gue/u6pJJqet2/kBZpLcBwDPuMNXvuO3VObN4lnWY6', 'USER', 'Tomek', 'Gacek', 1),
+(9, '', '', '$2a$10$L8YZ4zFOJUALBG3GAPnNwedvrwSiirh4..4oShDiRtoNzcGYVhcz.', 'USER', '', '', 1);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -189,7 +249,8 @@ ALTER TABLE `car_generation`
 -- Indeksy dla tabeli `car_model`
 --
 ALTER TABLE `car_model`
-  ADD PRIMARY KEY (`Id`);
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Model` (`Model`);
 
 --
 -- Indeksy dla tabeli `follows`
@@ -219,37 +280,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `car_brand`
 --
 ALTER TABLE `car_brand`
-  MODIFY `Id` double NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `car_generation`
 --
 ALTER TABLE `car_generation`
-  MODIFY `Id` double NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `car_model`
 --
 ALTER TABLE `car_model`
-  MODIFY `Id` double NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tokens`
 --
 ALTER TABLE `tokens`
-  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` double UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` double UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
