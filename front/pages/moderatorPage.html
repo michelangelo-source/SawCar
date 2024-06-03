@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SawCar</title>
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../css/moderatorPage.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header>
+
+    <div id="logoDiv">
+      <a id="logo" href="./mainPage.html"><img src="../img/carLogo.png" alt="logo"></a>
+    </div>
+
+   
+
+  </header>
+
+  <main>
+    <div id="content">
+        <div id="addCar">
+            <label for="brand">Marka</label>
+                <input type="text" class="inputs" id="brand" placeholder="Ferrari">
+                <br>
+                <label for="model">Model</label>
+                <input type="text" class="inputs" id="model" placeholder="SF90" >
+                <br>
+                <label for="generation">Generacja</label>
+                <input type="number" class="inputs" id="generation" min="0">
+                <br>
+                <label for="start_year">Rok rozpoczęcia produkcji</label>
+                <input type="number" class="inputs" id="start_year" min="0" max="2024">
+                <br>
+                <label for="end_year">Rok zakończenia produkcji</label>
+                <input type="number" class="inputs" id="end_year" min="0" max="2024">
+                <div  class="stdBtn" onclick="addCar()">Dodaj</div>            
+        </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Tomasz Gacek 2024</p>
+  </footer>
+  <script src="../scripts/moderatorPageScript.js"></script>
+</body>
+</html>

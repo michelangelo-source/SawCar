@@ -1,6 +1,7 @@
 package com.sawcar.sawcarback.seen;
 
 
+import com.sawcar.sawcarback.cars.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,5 +24,10 @@ public class FollowController {
     public void unfollow(@PathVariable("User")String user,@PathVariable("UnFollowedUser") String unfollwedUser){
         FollowRequest followRequest = new FollowRequest(user,unfollwedUser);
         followService.unfollow(followRequest);
+    }
+    @PostMapping("/addCar")
+    @CrossOrigin
+    public void addCar(@RequestBody Car car){
+    followService.addCar(car);
     }
 }

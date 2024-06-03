@@ -2,6 +2,12 @@ POSTY
 id userid tresc zdjecie data MarkadID modelID generationID
 
 
+
+
+
+
+
+
 przegladnai danego auta
 
 przegladania danego uzytkownika
