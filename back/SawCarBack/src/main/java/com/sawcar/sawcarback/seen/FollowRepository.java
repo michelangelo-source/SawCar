@@ -17,7 +17,7 @@ public interface FollowRepository extends JpaRepository<Follow,Long> {
 @Query("DELETE FROM Follow f WHERE f.UserId=?1 and f.WhoUserFollowsId=?2")
     void unfollow(long userid,long unfolloweduser);
     @Procedure(procedureName = "SPAddCar")
-    void addcar(String brand,String model,int generaion,int start_year,int end_year);
+    void addcar(String brand,String model,int generation,int start_year,int end_year);
 
 
 }

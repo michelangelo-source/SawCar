@@ -22,6 +22,7 @@ public class FollowService {
     }
 
     public void addCar(Car car) {
+        System.out.println(car.getBrand()+" "+car.getModel()+" "+car.getGeneration()+" "+car.getStart_year()+" "+car.getEnd_year());
         followRepository.addcar(car.getBrand(), car.getModel(), car.getGeneration(),car.getStart_year(),car.getEnd_year());
     }
 }

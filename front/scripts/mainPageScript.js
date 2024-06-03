@@ -130,7 +130,7 @@ async function destroyToken(){
 function logout(){
   
   destroyToken().then(()=>{
-    window.location.replace("http://127.0.0.1:5500/front/pages/index.html");
+    window.location.replace("./index.html");
   })
   
 }
@@ -163,5 +163,5 @@ function renewToken(){
   
 }
 function moderatorPage(){
-  window.location.replace("http://127.0.0.1:5500/front/pages/moderatorPage.html");
+  window.location.replace("./moderatorPage.html");
 }

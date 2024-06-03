@@ -25,6 +25,7 @@ function addCar(){
 }
 addCarFetch(carData).then(()=>{
   console.log("dodano")
+  console.log(carData)
   })
-   // console.log(brand,model,generation,start_year,end_year)
+
 }
