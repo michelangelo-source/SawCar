@@ -1,11 +1,10 @@
 package com.sawcar.sawcarback.seen;
 
 import com.sawcar.sawcarback.cars.Brand;
+import com.sawcar.sawcarback.cars.Generation;
+import com.sawcar.sawcarback.cars.Model;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +21,16 @@ public class SeenController {
     public List<Brand> getBrands(){
 
      return seenService.getBrands();
+    }
+    @GetMapping("/model/{brandId}")
+    @CrossOrigin
+    public List<Model> getModels(@PathVariable("brandId")long brandId){
+        return seenService.getModels(brandId);
+    }
+    @GetMapping("/generation/{modelId}")
+    @CrossOrigin
+    public List<Generation> getGenerations(@PathVariable("modelId")long modelId){
+        return seenService.getGenerations(modelId);
     }
 
 
