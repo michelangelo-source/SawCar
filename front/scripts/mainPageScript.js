@@ -1,3 +1,13 @@
+window.addEventListener("load", async () => {
+  result= await moderatorPageAccess()
+  if(result.access){
+    moderDiv=document.createElement("div")
+    moderDiv.id="moderPage"
+    moderDiv.innerHTML="StronaModera"
+    moderDiv.addEventListener("click",moderatorPage)
+    document.getElementById("footer").appendChild(moderDiv)
+  }
+});
 function createFollowDiv(data){
   followDiv=document.createElement("div")
   followDiv.id="followDiv"
@@ -162,6 +172,43 @@ function renewToken(){
   })
   
 }
-function moderatorPage(){
-  window.location.replace("./moderatorPage.html");
+
+
+async function moderatorPageAccess(){
+  const res =await fetch("http://localhost:8080/moderator/access",{
+   method: "GET", // *GET, POST, PUT, DELETE, etc.
+   mode: "cors", // no-cors, *cors, same-origin
+   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+   credentials: "same-origin", // include, *same-origin, omit
+   headers: {
+     "Authorization":sessionStorage.getItem("token") //////////////
+     // 'Content-Type': 'application/x-www-form-urlencoded',
+   },
+   redirect: "follow", // manual, *follow, error
+   referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+   
+  })
+ return res.json();
+ }
+ function moderatorPage(){
+  moderatorPageAccess().then(()=>{
+    window.location.replace("./moderatorPage.html");
+    return true
+  }).catch((err)=>{
+    console.log(err)
+    alert("Brak dostepu")
+  })
+ 
+}
+function moderatorDiv(){
+  moderatorPageAccess().then(()=>{
+    return true
+  }).catch(()=>{
+   return false
+  })
+ 
+}
+
+function addSeenPage(){
+  window.location.replace("./addSeen.html");
 }

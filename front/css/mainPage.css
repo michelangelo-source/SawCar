@@ -9,6 +9,15 @@
     align-items: center;
     justify-content: center;
 }
+#content{
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    width: 60%;
+    align-items: normal;
+    justify-content: normal;
+    background-color: white;
+}
 #logoDiv{
     display: flex;
     width: 15%;
@@ -46,4 +55,14 @@
     align-items: center;
  
 
+}
+#moderPage{
+    display: flex;
+    align-self: flex-end;
+    justify-self: end;
+    float: right;
+
+}
+#addSeenDiv{
+  width: min-content;
 }

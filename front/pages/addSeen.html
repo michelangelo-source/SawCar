@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SawCar</title>
     <link rel="shortcut icon" href="../img/favicon.ico">
+    <link rel="stylesheet" href="../css/addSeen.css">
+    <link rel="stylesheet" href="../css//mainPage.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/mainPage.css">
 </head>
 <body>
   <header>
@@ -15,10 +16,7 @@
       <a id="logo" href="./mainPage.html"><img src="../img/carLogo.png" alt="logo"></a>
     </div>
 
-    <div id="searchUsrDiv">
-      <input class="inputs" id="Nickname" type="search" placeholder="Nazwa uzytkownika" aria-label="Search">
-      <div id="searchUser" class="headBtn" type="button" onclick="find()">Search</div>
-    </div>
+   
   
     <div id="leftSideBtnsDiv">
       <div class="headBtn" onclick="renewToken()">odnow token </div>
@@ -29,7 +27,7 @@
 
   <main>
     <div id="content">
-      <div id="addSeenDiv" class="stdBtn" onclick="addSeenPage()" >dodaj posta</div>
+      <select name="Brand" id="Brand"></select>
     </div>
   </main>
 
@@ -40,6 +38,7 @@
 
 
   </footer>
+  <script src="../scripts/addSeen.js"></script>
   <script src="../scripts/mainPageScript.js"></script>
 </body>
 </html>
