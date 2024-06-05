@@ -7,7 +7,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.data.domain.Example;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -89,7 +88,7 @@ public class JWTService {
     }
     public void deactivateTokens(String nickname){
         Long id= userRepository.getUserId(nickname);
-        tokenRepository.deactiveAll(id);
+        tokenRepository.deactivateAll(id);
     }
 
     public String renewToken(String nickname) {

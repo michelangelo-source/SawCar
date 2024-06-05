@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.sawcar.sawcarback.user.Type.ADMIN;
 import static com.sawcar.sawcarback.user.Type.MODERATOR;
-//@Configuration
+
 @AllArgsConstructor
 public class SuperUsersConfig {
     private final PasswordEncoder passwordEncoder;

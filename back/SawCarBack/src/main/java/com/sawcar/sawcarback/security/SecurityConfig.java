@@ -33,6 +33,9 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers("/admin/**").hasAnyRole(ADMIN.name())
                         .requestMatchers(GET, "/admin/users").hasAnyAuthority(ADMIN_READ.name())
+                        .requestMatchers("/moderator/**").hasAnyRole(MODERATOR.name(),ADMIN.name())
+                        .requestMatchers(POST,"/moderator/addCar").hasAnyAuthority(MODERATOR_CREATE.name())
+                        .requestMatchers(GET,"/moderator/access").hasAnyAuthority(MODERATOR_READ.name())
                         .anyRequest()
                         .authenticated()
 
