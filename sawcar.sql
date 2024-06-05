@@ -1,104 +1,87 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Apr 26, 2024 at 11:07 PM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `sawcar`
---
-
 DELIMITER $$
---
--- Procedury
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `SPAddCar` (IN `brand` VARCHAR(255), IN `model` VARCHAR(255), IN `generation` INT, IN `startYear` YEAR, IN `endYear` YEAR)   BEGIN
-INSERT INTO car_brand SELECT NULL,brand WHERE NOT EXISTS ( SELECT 1 FROM car_brand WHERE Brand = brand );
-INSERT INTO car_model SELECT NULL,(SELECT car_brand.Id FROM car_brand WHERE car_brand.Brand=brand),model WHERE NOT EXISTS ( SELECT 1 FROM car_model WHERE Model = model );
+-
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SPAddCar` (IN `brandPROCEDURE` VARCHAR(255), IN `modelPROCEDURE` VARCHAR(255), IN `generationPROCEDURE` INT, IN `startYearPROCEDURE` INT, IN `endYearPROCEDURE` INT)   BEGIN
+    DECLARE brandId INT DEFAULT NULL;
+    DECLARE modelId INT DEFAULT NULL;
 
-INSERT INTO car_generation SELECT NULL,(SELECT car_brand.Id FROM car_brand WHERE car_brand.Brand=brand),(SELECT car_model.Id FROM car_model WHERE car_model.Model=model),generation,startYear,endYear WHERE NOT EXISTS ( SELECT 1 FROM car_generation WHERE car_generation.Id=generation AND car_generation.Brand_Id=(SELECT car_brand.Id FROM car_brand WHERE car_brand.Brand=brand) AND car_generation.Model_Id= (SELECT car_model.Id FROM car_model WHERE car_model.Model=model));
+    SELECT Id INTO brandId FROM car_brand WHERE Brand = brandPROCEDURE LIMIT 1;
+    
+    IF brandId IS NULL THEN 
+        INSERT INTO car_brand (Brand) VALUES (brandPROCEDURE);
+        SELECT LAST_INSERT_ID() INTO brandId; 
+    END IF;
+
+
+    SELECT Id INTO modelId FROM car_model WHERE Model = modelPROCEDURE AND Brand_Id = brandId LIMIT 1;
+
+
+    IF modelId IS NULL THEN 
+        INSERT INTO car_model (Brand_Id, Model) VALUES (brandId, modelPROCEDURE);
+        SELECT LAST_INSERT_ID() INTO modelId;
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM car_generation
+        WHERE Generation = generationPROCEDURE
+          AND Brand_Id = brandId
+          AND Model_Id = modelId
+    ) THEN
+        INSERT INTO car_generation (Brand_Id, Model_Id, Generation, Start_Year, End_Year)
+        VALUES (brandId, modelId, generationPROCEDURE, startYearPROCEDURE, endYearPROCEDURE);
+    END IF;
 END$$
 
 DELIMITER ;
 
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `car_brand`
---
 
 CREATE TABLE `car_brand` (
-  `Id` double NOT NULL,
-  `Brand` varchar(255) NOT NULL
+  `Id` int(11) NOT NULL,
+  `Brand` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `car_brand`
---
+
 
 INSERT INTO `car_brand` (`Id`, `Brand`) VALUES
-(1, 'Fiat');
+(3, 'Ferrari'),
+(2, 'Fiat'),
+(1, 'Volkswagen');
 
--- --------------------------------------------------------
 
---
--- Struktura tabeli dla tabeli `car_generation`
---
 
 CREATE TABLE `car_generation` (
-  `Id` double NOT NULL,
-  `Brand_Id` double NOT NULL,
-  `Model_Id` double NOT NULL,
-  `Ganeration` int(11) NOT NULL,
-  `Start_Year` year(4) NOT NULL,
-  `End_Year` year(4) NOT NULL
+  `Id` int(11) NOT NULL,
+  `Brand_Id` int(11) DEFAULT NULL,
+  `Model_Id` int(11) DEFAULT NULL,
+  `Generation` int(11) DEFAULT NULL,
+  `Start_Year` int(11) DEFAULT NULL,
+  `End_Year` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `car_generation`
---
 
-INSERT INTO `car_generation` (`Id`, `Brand_Id`, `Model_Id`, `Ganeration`, `Start_Year`, `End_Year`) VALUES
-(1, 1, 1, 1, '2015', '2024'),
-(3, 1, 1, 4, '2015', '2024');
+INSERT INTO `car_generation` (`Id`, `Brand_Id`, `Model_Id`, `Generation`, `Start_Year`, `End_Year`) VALUES
+(1, 1, 1, 2, 1983, 1992),
+(2, 2, 2, 1, 2015, 2024),
+(3, 2, 3, 2, 1993, 1999),
+(4, 3, 4, 1, 2020, 2024);
 
--- --------------------------------------------------------
 
---
--- Struktura tabeli dla tabeli `car_model`
---
 
 CREATE TABLE `car_model` (
-  `Id` double NOT NULL,
-  `Brand_Id` double NOT NULL,
-  `Model` varchar(255) NOT NULL
+  `Id` int(11) NOT NULL,
+  `Brand_Id` int(11) DEFAULT NULL,
+  `Model` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `car_model`
---
-
 INSERT INTO `car_model` (`Id`, `Brand_Id`, `Model`) VALUES
-(1, 1, 'Tipo');
+(1, 1, 'Golf'),
+(3, 2, 'Punto'),
+(2, 2, 'Tipo'),
+(4, 3, 'SF90');
 
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `follows`
---
 
 CREATE TABLE `follows` (
   `ID` double NOT NULL,
@@ -106,19 +89,9 @@ CREATE TABLE `follows` (
   `Followed_UserdID` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
---
--- Dumping data for table `follows`
---
-
 INSERT INTO `follows` (`ID`, `UserID`, `Followed_UserdID`) VALUES
 (4, 2, 4),
 (5, 2, 1);
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `tokens`
---
 
 CREATE TABLE `tokens` (
   `ID` double NOT NULL,
@@ -128,9 +101,6 @@ CREATE TABLE `tokens` (
   `is_active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `tokens`
---
 
 INSERT INTO `tokens` (`ID`, `userID`, `token`, `generate_date`, `is_active`) VALUES
 (1, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMjA5MTc3MSwiZXhwIjoxNzEyMDkzMjExfQ.MhkVrFuRM8O8VNihLQPbcDqov-srY9Lnml1xXDDFHvA', '2024-04-02', 0),
@@ -195,13 +165,15 @@ INSERT INTO `tokens` (`ID`, `userID`, `token`, `generate_date`, `is_active`) VAL
 (60, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2Mzc2MiwiZXhwIjoxNzE0MDY1MjAyfQ.gnOMPSpdDavk909_1JcbUkkIxxoT_hsexyknvUk26Zk', '2024-04-25', 0),
 (61, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MzgwOCwiZXhwIjoxNzE0MDY1MjQ4fQ.vrAnsG8NRPI9rZjcm9hdP-uQH8qc1wMWXOnuLW0Ekiw', '2024-04-25', 0),
 (62, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2MzgzOSwiZXhwIjoxNzE0MDY1Mjc5fQ.fuTnw2geUHEPNCTf7w0kZfripjsbcFK93tfT8iFjwXA', '2024-04-25', 0),
-(63, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2NzQ4MiwiZXhwIjoxNzE0MDY4OTIyfQ.AaEr0W3o-6gRdLGa-pitcezi1f03ty0X_mfuil3qVsI', '2024-04-25', 1);
+(63, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNDA2NzQ4MiwiZXhwIjoxNzE0MDY4OTIyfQ.AaEr0W3o-6gRdLGa-pitcezi1f03ty0X_mfuil3qVsI', '2024-04-25', 0),
+(64, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzQxNjIyNiwiZXhwIjoxNzE3NDE3NjY2fQ.KjfIhvOkNn-lr2BJJqGksJFITMXEK1siAVciXu5zsJ0', '2024-06-03', 0),
+(65, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzQxNjUyMiwiZXhwIjoxNzE3NDE3OTYyfQ.27trKcUYhu-5PDvvO5cffhfsNgBqyEbb8QnYKMAs0uY', '2024-06-03', 0),
+(66, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzQxODAzOCwiZXhwIjoxNzE3NDE5NDc4fQ.icylaHaga5yr2rGf3VOeHE-9UrK2BhSHzASfta_4Ly4', '2024-06-03', 0),
+(67, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzQxOTcxMSwiZXhwIjoxNzE3NDIxMTUxfQ.GoJHEIGq0psN3Itn6Y3hdXkZ6u5NMJjJl_FxOBJso6E', '2024-06-03', 0),
+(68, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzQyMDc2OCwiZXhwIjoxNzE3NDIyMjA4fQ.ahVeNNd3o2PnwZv2MNsM3izGMp8hrwHzCA84EspOjhQ', '2024-06-03', 0),
+(69, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzQzNzExMywiZXhwIjoxNzE3NDM4NTUzfQ.TAcD6WH5vJWcMqqEctcoE18FJHaDv182PvFzJkpyKE8', '2024-06-03', 0),
+(70, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzQzOTU1NSwiZXhwIjoxNzE3NDQwOTk1fQ._Lye05-jafyxl7ct-cP-__5OieMh7XxjYkLwjZL8MiM', '2024-06-03', 1);
 
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `users`
---
 
 CREATE TABLE `users` (
   `ID` double UNSIGNED NOT NULL,
@@ -214,9 +186,6 @@ CREATE TABLE `users` (
   `can_be_found` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
---
--- Dumping data for table `users`
---
 
 INSERT INTO `users` (`ID`, `NickName`, `Email`, `Password`, `Type`, `name`, `surname`, `can_be_found`) VALUES
 (1, 'qq', 'qq', '$2a$10$pHAns0fYZIAq/kmrO46OPeDs04EBHPTFoyPCijPzgs3fqsQZmAIWm', 'USER', 'qq', 'qq', 1),
@@ -225,94 +194,64 @@ INSERT INTO `users` (`ID`, `NickName`, `Email`, `Password`, `Type`, `name`, `sur
 (4, 'Guido', 'tgacek@sawcar.pl', '$2a$10$.tjx6/nZL7.4uRcwBKSd4u0MbE3sDYYhIQ0Amy6pWcIl0l29aRpou', 'USER', 'Tomek', 'Gacek', 1),
 (6, 'tomek', 'tomek@sawcar.pl', '$2a$10$5pp/G9cKvJfy3SMQv9HUje17j9ZVSC8e5pn/M9GrtfuWtW5P71tCS', 'USER', 'tomek', 'tomek', 1),
 (7, 'dar3cz3q', 'dar@gmail.com', '$2a$10$TS4A9yoNMytFSwBLtm9U0.grUUOPWIs/eyk/Z5tkR.PHfEnvZHG6m', 'USER', 'Darek', 'Homa', 1),
-(8, 'Guido2', 'tgacek2@sawcar.pl', '$2a$10$FpS6yZW0F32Gue/u6pJJqet2/kBZpLcBwDPuMNXvuO3VObN4lnWY6', 'USER', 'Tomek', 'Gacek', 1),
-(9, '', '', '$2a$10$L8YZ4zFOJUALBG3GAPnNwedvrwSiirh4..4oShDiRtoNzcGYVhcz.', 'USER', '', '', 1);
+(8, 'Guido2', 'tgacek2@sawcar.pl', '$2a$10$FpS6yZW0F32Gue/u6pJJqet2/kBZpLcBwDPuMNXvuO3VObN4lnWY6', 'USER', 'Tomek', 'Gacek', 1);
 
---
--- Indeksy dla zrzutów tabel
---
 
---
--- Indeksy dla tabeli `car_brand`
---
 ALTER TABLE `car_brand`
   ADD PRIMARY KEY (`Id`),
   ADD UNIQUE KEY `Brand` (`Brand`);
 
---
--- Indeksy dla tabeli `car_generation`
---
 ALTER TABLE `car_generation`
-  ADD PRIMARY KEY (`Id`);
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Brand_Id` (`Brand_Id`,`Model_Id`,`Generation`),
+  ADD KEY `Model_Id` (`Model_Id`);
 
---
--- Indeksy dla tabeli `car_model`
---
 ALTER TABLE `car_model`
   ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Model` (`Model`);
+  ADD UNIQUE KEY `Brand_Id` (`Brand_Id`,`Model`);
 
---
--- Indeksy dla tabeli `follows`
---
 ALTER TABLE `follows`
   ADD PRIMARY KEY (`ID`);
 
---
--- Indeksy dla tabeli `tokens`
---
 ALTER TABLE `tokens`
   ADD PRIMARY KEY (`ID`);
 
---
--- Indeksy dla tabeli `users`
---
+
 ALTER TABLE `users`
   ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `NickName` (`NickName`) USING HASH,
   ADD UNIQUE KEY `Email` (`Email`) USING HASH;
 
---
--- AUTO_INCREMENT for dumped tables
---
 
---
--- AUTO_INCREMENT for table `car_brand`
---
 ALTER TABLE `car_brand`
-  MODIFY `Id` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
---
--- AUTO_INCREMENT for table `car_generation`
---
+
 ALTER TABLE `car_generation`
-  MODIFY `Id` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
---
--- AUTO_INCREMENT for table `car_model`
---
+
 ALTER TABLE `car_model`
-  MODIFY `Id` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
---
--- AUTO_INCREMENT for table `follows`
---
+
 ALTER TABLE `follows`
   MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
---
--- AUTO_INCREMENT for table `tokens`
---
-ALTER TABLE `tokens`
-  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
---
--- AUTO_INCREMENT for table `users`
---
+ALTER TABLE `tokens`
+  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+
 ALTER TABLE `users`
   MODIFY `ID` double UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+
+ALTER TABLE `car_generation`
+  ADD CONSTRAINT `car_generation_ibfk_1` FOREIGN KEY (`Brand_Id`) REFERENCES `car_brand` (`Id`),
+  ADD CONSTRAINT `car_generation_ibfk_2` FOREIGN KEY (`Model_Id`) REFERENCES `car_model` (`Id`);
+
+
+ALTER TABLE `car_model`
+  ADD CONSTRAINT `car_model_ibfk_1` FOREIGN KEY (`Brand_Id`) REFERENCES `car_brand` (`Id`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
