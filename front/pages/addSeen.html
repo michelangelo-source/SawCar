@@ -27,7 +27,11 @@
 
   <main>
     <div id="content">
-      <select name="Brand" id="Brand"></select>
+      <textarea name="description" id="SeenDescription" placeholder="Jakie auto i wrazenia np Nissan Skyline R34, pięna bestaia" maxlength="255"></textarea>
+      <input type="file" id="carPhoto" onchange="addedPhoto()" accept=".png, .jpg, .jpeg"/>
+      <br>
+      <img id="PreView" src="#" alt="Zalacz zdjecie">
+      <select name="Brand" id="Brand" onchange="choseBrand()"></select>
     </div>
   </main>
 
