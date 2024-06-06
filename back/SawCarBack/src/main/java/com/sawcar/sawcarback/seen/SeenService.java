@@ -5,6 +5,7 @@ import com.sawcar.sawcarback.cars.Generation;
 import com.sawcar.sawcarback.cars.Model;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 @Service
 public class SeenService {
@@ -24,5 +25,10 @@ public class SeenService {
 
     public List<Generation> getGenerations(long modelId) {
         return seenRepository.getGenerations(modelId);
+    }
+
+    public void saveSeen(long userid, String seenTxt, String filename, long brandId, long modelId, long generationId) {
+        Seen seen =new Seen(userid, seenTxt, filename, new Date(), brandId,  modelId,  generationId);
+        seenRepository.save(seen);
     }
 }
