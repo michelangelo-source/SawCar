@@ -90,8 +90,49 @@ function choseModel(){
 
 }
 function choseGeneration(){
-  console.log("dupsko")
+  btnDiv=document.createElement("div")
+  btnDiv.id="addSeenBtn"
+  btnDiv.classList.add("stdBtn")
+  btnDiv.innerHTML="Dodaj"
+  btnDiv.addEventListener("click",submit)
+  document.getElementById("content").appendChild(btnDiv)
 }
 function addedPhoto(){
   document.getElementById("PreView").src=URL.createObjectURL(document.getElementById("carPhoto").files[0])
 }
+function submit(){
+  const formData = new FormData();
+  formData.append("file", document.getElementById("carPhoto").files[0]);
+  formData.append("Text", document.getElementById("SeenDescription").value);
+  formData.append("UserId", sessionStorage.getItem("id"));
+  formData.append("BrandId", document.getElementById("Brand").value);
+  formData.append("ModelId", document.getElementById("Model").value);
+  formData.append("GenerationId", document.getElementById("Generation").value);
+  addSeenPost(formData).then(()=>{
+  window.location.replace("./mainPage.html")
+  }).catch(()=>{
+    alert("nie udalo sie dodac posta")
+  })
+}
+
+async function addSeenPost(formData){
+  const res =await fetch("http://localhost:8080/seen/addSeen",{
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Authorization":sessionStorage.getItem("token") //////////////
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body:formData
+   })
+}
+
+
+ 
+
+
+ 
