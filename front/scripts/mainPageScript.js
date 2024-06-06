@@ -1,4 +1,45 @@
 window.addEventListener("load", async () => {
+  await getSeens().then(async res=>{
+
+
+   for(i=0;i<res.length;i++){
+    
+   seen=document.createElement("img")
+    await getPhoto(res[i].imageUrl).then((response) => {
+      console.log(res[i])
+      const reader = response.body.getReader();
+      return new ReadableStream({
+        start(controller) {
+          return pump();
+          function pump() {
+            return reader.read().then(({ done, value }) => {
+              // When no more data needs to be consumed, close the stream
+              if (done) {
+                controller.close();
+                return;
+              }
+              // Enqueue the next data chunk into our target stream
+              controller.enqueue(value);
+              return pump();
+            });
+          }
+        },
+      });
+    })
+    // Create a new response out of the stream
+    .then((stream) => new Response(stream))
+    // Create an object URL for the response
+    .then((response) => response.blob())
+    .then((blob) => URL.createObjectURL(blob))
+    // Update image
+    .then((url) => {seen.src=url})
+    .catch((err) => console.error(err));
+   document.getElementById("content").appendChild(seen) 
+   }
+  })
+  
+
+  
   result= await moderatorPageAccess()
   if(result.access){
     moderDiv=document.createElement("div")
@@ -7,7 +48,44 @@ window.addEventListener("load", async () => {
     moderDiv.addEventListener("click",moderatorPage)
     document.getElementById("footer").appendChild(moderDiv)
   }
+
+
 });
+async function getPhoto(url){
+  const res =await fetch("http://localhost:8080"+url,{
+    method: "GET", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Authorization":sessionStorage.getItem("token") //////////////
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    
+   })
+  return res;
+}
+
+
+async function getSeens(){
+  const res =await fetch("http://localhost:8080/seen/getSeen/"+sessionStorage.getItem("id"),{
+    method: "GET", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Authorization":sessionStorage.getItem("token") //////////////
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    
+   })
+  return res.json();
+}
+
 function createFollowDiv(data){
   followDiv=document.createElement("div")
   followDiv.id="followDiv"
@@ -90,6 +168,7 @@ function unfollow(){
   })
 }
 
+
 async function getUser(url){
   const res =await fetch(url,{
    method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -118,8 +197,6 @@ async function getUser(url){
 
   });
 }
-
-
 
 
 async function destroyToken(){
@@ -208,6 +285,8 @@ function moderatorDiv(){
   })
  
 }
+
+
 
 function addSeenPage(){
   window.location.replace("./addSeen.html");
