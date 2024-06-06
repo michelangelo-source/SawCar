@@ -33,4 +33,32 @@ public class Seen {
         this.modelId = modelId;
         this.generationId = generationId;
     }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public long getBrandId() {
+        return brandId;
+    }
+
+    public long getModelId() {
+        return modelId;
+    }
+
+    public long getGenerationId() {
+        return generationId;
+    }
 }

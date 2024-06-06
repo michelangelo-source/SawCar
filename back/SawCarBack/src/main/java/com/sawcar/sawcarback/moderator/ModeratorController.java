@@ -1,7 +1,7 @@
 package com.sawcar.sawcarback.moderator;
 
 import com.sawcar.sawcarback.cars.Car;
-import com.sawcar.sawcarback.seen.FollowService;
+import com.sawcar.sawcarback.seen.SeenService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("hasRole('MODERATOR')")
 @RequestMapping(path = "/moderator")
 public class ModeratorController {
-    private final FollowService followService;
+    private final SeenService seenService;
 
-    public ModeratorController(FollowService followService) {
-        this.followService = followService;
+    public ModeratorController(SeenService seenService) {
+        this.seenService = seenService;
     }
     @GetMapping("/access")
     @CrossOrigin
@@ -24,6 +24,6 @@ public class ModeratorController {
     @CrossOrigin
     @PreAuthorize("hasAuthority('moderator:create')")
     public void addCar(@RequestBody Car car){
-        followService.addCar(car);
+       seenService.addCar(car);
     }
 }

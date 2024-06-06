@@ -1,6 +1,9 @@
-package com.sawcar.sawcarback.seen;
+package com.sawcar.sawcarback.follow;
 
 import com.sawcar.sawcarback.cars.Car;
+import com.sawcar.sawcarback.follow.Follow;
+import com.sawcar.sawcarback.follow.FollowRepository;
+import com.sawcar.sawcarback.follow.FollowRequest;
 import com.sawcar.sawcarback.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,8 +24,5 @@ public class FollowService {
        return followRepository.isAlreadyFollowed(follow.getUserId(),follow.getWhoUserFollowsId());
     }
 
-    public void addCar(Car car) {
-        System.out.println(car.getBrand()+" "+car.getModel()+" "+car.getGeneration()+" "+car.getStart_year()+" "+car.getEnd_year());
-        followRepository.addcar(car.getBrand(), car.getModel(), car.getGeneration(),car.getStart_year(),car.getEnd_year());
-    }
+
 }

@@ -1,4 +1,4 @@
-package com.sawcar.sawcarback.seen;
+package com.sawcar.sawcarback.follow;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

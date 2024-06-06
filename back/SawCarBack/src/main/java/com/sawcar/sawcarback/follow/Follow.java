@@ -1,4 +1,4 @@
-package com.sawcar.sawcarback.seen;
+package com.sawcar.sawcarback.follow;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

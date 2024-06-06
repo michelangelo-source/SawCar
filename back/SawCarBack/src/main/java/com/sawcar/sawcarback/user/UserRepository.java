@@ -18,5 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> CanBeFollow(String name);
     @Query("SELECT u.id FROM User u WHERE u.nickname=?1")
     Long getUserId(String nickname);
+    @Query("SELECT u.nickname FROM User u WHERE u.id=?1")
+    String getUserNicknameById(long id);
 }
 

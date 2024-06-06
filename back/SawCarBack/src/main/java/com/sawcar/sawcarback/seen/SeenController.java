@@ -5,6 +5,9 @@ import com.sawcar.sawcarback.cars.Generation;
 import com.sawcar.sawcarback.cars.Model;
 import com.sawcar.sawcarback.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +24,19 @@ public class SeenController {
     public SeenController(StorageService storageService, SeenService seenService) {
         this.storageService = storageService;
         this.seenService = seenService;
+    }
+    @GetMapping("/{filename}")
+    @CrossOrigin
+    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+        Resource file = storageService.loadAsResource(filename);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+    }
+    @GetMapping("/getSeen/{user_id}")
+    @CrossOrigin
+    public List<SeenRespond> getSeens(@PathVariable("user_id")long userId){
+        return seenService.getSeens(userId);
     }
 
     @PostMapping("/addSeen")
@@ -45,6 +61,7 @@ public class SeenController {
 
      return seenService.getBrands();
     }
+
     @GetMapping("/model/{brandId}")
     @CrossOrigin
     public List<Model> getModels(@PathVariable("brandId")long brandId){

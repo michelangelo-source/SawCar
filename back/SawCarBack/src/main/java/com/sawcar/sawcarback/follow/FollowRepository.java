@@ -1,6 +1,6 @@
-package com.sawcar.sawcarback.seen;
+package com.sawcar.sawcarback.follow;
 
-import com.sawcar.sawcarback.cars.Car;
+import com.sawcar.sawcarback.follow.Follow;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,8 +16,7 @@ public interface FollowRepository extends JpaRepository<Follow,Long> {
     @Transactional
 @Query("DELETE FROM Follow f WHERE f.UserId=?1 and f.WhoUserFollowsId=?2")
     void unfollow(long userid,long unfolloweduser);
-    @Procedure(procedureName = "SPAddCar")
-    void addcar(String brand,String model,int generation,int start_year,int end_year);
+
 
 
 }

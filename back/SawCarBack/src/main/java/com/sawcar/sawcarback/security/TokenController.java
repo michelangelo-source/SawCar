@@ -19,6 +19,7 @@ public class TokenController {
         System.out.println(nickname);
         return jwtService.renewToken(nickname);
     }
+
     @DeleteMapping("{nickname}")
     @CrossOrigin
     public void deactivateToken(@PathVariable("nickname")String nickname){

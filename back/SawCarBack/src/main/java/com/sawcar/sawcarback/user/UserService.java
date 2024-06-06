@@ -1,8 +1,8 @@
 package com.sawcar.sawcarback.user;
 
 import com.sawcar.sawcarback.security.JWTService;
-import com.sawcar.sawcarback.seen.Follow;
-import com.sawcar.sawcarback.seen.FollowService;
+import com.sawcar.sawcarback.follow.Follow;
+import com.sawcar.sawcarback.follow.FollowService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
