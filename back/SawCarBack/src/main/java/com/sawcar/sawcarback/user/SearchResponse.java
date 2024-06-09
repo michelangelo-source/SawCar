@@ -1,13 +1,13 @@
 package com.sawcar.sawcarback.user;
 
-public class SearchRespone {
+public class SearchResponse {
     private boolean alreadyFollow;
     private String nickname;
 
-    public SearchRespone() {
+    public SearchResponse() {
     }
 
-    public SearchRespone(boolean alreadyFollow, String nickname) {
+    public SearchResponse(boolean alreadyFollow, String nickname) {
         this.alreadyFollow = alreadyFollow;
         this.nickname = nickname;
     }

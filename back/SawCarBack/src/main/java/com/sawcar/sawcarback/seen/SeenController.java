@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/seen")
 public class SeenController {
-    private static int photoCounter=0;
+
     private final StorageService storageService;
      private final SeenService seenService;
     @Autowired
@@ -25,6 +25,7 @@ public class SeenController {
         this.storageService = storageService;
         this.seenService = seenService;
     }
+
     @GetMapping("/{filename}")
     @CrossOrigin
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
@@ -48,9 +49,9 @@ public class SeenController {
                         @RequestParam("ModelId")long modelId,
                         @RequestParam("GenerationId")long generationId){
 
-        photoCounter++;
+
         String[] extension=file.getOriginalFilename().split("\\.");
-        String filename=photoCounter+"."+ extension[1];
+        String filename=(seenService.countSeens()+1) +"."+ extension[1];
         storageService.store(file, filename);
         seenService.saveSeen(userid,seenTxt,filename,brandId,modelId,generationId);
 

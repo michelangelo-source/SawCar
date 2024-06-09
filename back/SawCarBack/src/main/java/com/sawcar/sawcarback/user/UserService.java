@@ -1,5 +1,6 @@
 package com.sawcar.sawcarback.user;
 
+import com.sawcar.sawcarback.follow.FollowRequest;
 import com.sawcar.sawcarback.security.JWTService;
 import com.sawcar.sawcarback.follow.Follow;
 import com.sawcar.sawcarback.follow.FollowService;
@@ -37,7 +38,8 @@ public class UserService {
                 .canBeFound(true)
                 .build();
         userRepository.save(user);
-
+        FollowRequest yourself=new FollowRequest(request.getNickname(),request.getNickname());
+        followService.follow(yourself);
     }
 
     public LoginResponse loginUser(LoginRequest request) {
@@ -54,7 +56,7 @@ public class UserService {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtService.generateToken(user));
         loginResponse.setNickname(user.getUsername());
-        loginResponse.setEmial(user.getEmail());
+        loginResponse.setEmail(user.getEmail());
         loginResponse.setId(user.getId());
         loginResponse.setCan_be_found(user.isCanBeFound());
         loginResponse.setSurname(user.getSurname());
@@ -67,12 +69,12 @@ public class UserService {
         return userRepository.findByNickname(name);
     }
 
-    public SearchRespone canBeFollow(String name, long id) {
+    public SearchResponse canBeFollow(String name, long id) {
         User user = userRepository.CanBeFollow(name).orElseThrow();
-        SearchRespone odp = new SearchRespone();
-        odp.setNickname(user.getNickname());
-        Follow toChcek = new Follow(id, user.getId());
-        odp.setAlreadyFollow(followService.alreadyFollow(toChcek) != 0);
-        return odp;
+        SearchResponse response = new SearchResponse();
+        response.setNickname(user.getNickname());
+        Follow toCheck = new Follow(id, user.getId());
+        response.setAlreadyFollow(followService.alreadyFollow(toCheck) != 0);
+        return response;
     }
 }

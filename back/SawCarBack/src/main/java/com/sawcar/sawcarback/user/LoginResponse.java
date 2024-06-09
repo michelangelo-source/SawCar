@@ -3,7 +3,7 @@ package com.sawcar.sawcarback.user;
 public class LoginResponse {
     private String token;
     private long id;
-    private String emial;
+    private String email;
     private String nickname;
     private String name;
     private String surname;
@@ -28,12 +28,12 @@ public class LoginResponse {
         this.id = id;
     }
 
-    public String getEmial() {
-        return emial;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmial(String emial) {
-        this.emial = emial;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNickname() {

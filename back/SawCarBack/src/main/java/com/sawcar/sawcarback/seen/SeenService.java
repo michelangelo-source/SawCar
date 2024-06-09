@@ -67,4 +67,8 @@ public class SeenService {
         System.out.println(respondList.get(0).getCarBrand());
         return respondList;
     }
+
+    public long countSeens() {
+        return seenRepository.count();
+    }
 }
