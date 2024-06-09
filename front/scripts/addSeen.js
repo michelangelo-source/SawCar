@@ -20,7 +20,6 @@ window.addEventListener("load", async () => {
     url="http://localhost:8080/seen/brand"
     options=await getList(url)
     option=document.createElement("option")
-   // option.disabled=true
     option.autofocus=true
     option.innerHTML="..."
     document.getElementById("Brand").appendChild(option)
@@ -40,6 +39,12 @@ function choseBrand(){
   getList(url).then((res)=>{
     if(document.getElementById("Model")){
       document.getElementById("Model").remove()
+    }
+    if(document.getElementById("Generation")){
+      document.getElementById("Generation").remove()
+    }
+    if(document.getElementById("addSeenBtn")){
+      document.getElementById("addSeenBtn").remove()
     }
     select=document.createElement("select")
     select.name="Model"
@@ -61,13 +66,14 @@ function choseBrand(){
   })
 
 }
-
-
 function choseModel(){
   url="http://localhost:8080/seen/generation/"+document.getElementById("Model").value
   getList(url).then((res)=>{
     if(document.getElementById("Generation")){
       document.getElementById("Generation").remove()
+    }
+    if(document.getElementById("addSeenBtn")){
+      document.getElementById("addSeenBtn").remove()
     }
     select=document.createElement("select")
     select.name="Generation"
@@ -75,7 +81,7 @@ function choseModel(){
     select.addEventListener("change",choseGeneration)
     document.getElementById("content").appendChild(select)
     option=document.createElement("option")
-    // option.disabled=true
+
      option.autofocus=true
      option.innerHTML="..."
      select.appendChild(option)
@@ -90,6 +96,9 @@ function choseModel(){
 
 }
 function choseGeneration(){
+  if(document.getElementById("addSeenBtn")){
+    document.getElementById("addSeenBtn").remove()
+  }
   btnDiv=document.createElement("div")
   btnDiv.id="addSeenBtn"
   btnDiv.classList.add("stdBtn")
@@ -97,6 +106,13 @@ function choseGeneration(){
   btnDiv.addEventListener("click",submit)
   document.getElementById("content").appendChild(btnDiv)
 }
+
+
+
+
+
+
+
 function addedPhoto(){
   document.getElementById("PreView").src=URL.createObjectURL(document.getElementById("carPhoto").files[0])
 }

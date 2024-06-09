@@ -24,8 +24,7 @@ function addCar(){
     end_year:document.getElementById("end_year").value
 }
 addCarFetch(carData).then(()=>{
-  console.log("dodano")
-  console.log(carData)
+  window.location.replace("./mainPage.html")
   })
 
 }

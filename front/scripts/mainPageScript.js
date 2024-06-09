@@ -1,10 +1,14 @@
 window.addEventListener("load", async () => {
   await getSeens().then(async res=>{
 
-
-   for(i=0;i<res.length;i++){
-    
-   seen=document.createElement("img")
+    document.getElementById("content").appendChild(document.createElement("br"))
+   for(i=res.length-1;i>=0;i--){
+   seenDiv=document.createElement("div")
+   seenDiv.classList.add("seen")
+   seenDiv.innerText=res[i].carBrand+" "+res[i].carModel+" "+res[i].carGeneration+"\n"+res[i].nickname+"\n"+res[i].date.substr(0,10)+"\n"+res[i].text
+  
+   seenDiv.appendChild(document.createElement("br"))
+   photo=document.createElement("img")
     await getPhoto(res[i].imageUrl).then((response) => {
       console.log(res[i])
       const reader = response.body.getReader();
@@ -32,10 +36,13 @@ window.addEventListener("load", async () => {
     .then((response) => response.blob())
     .then((blob) => URL.createObjectURL(blob))
     // Update image
-    .then((url) => {seen.src=url})
+    .then((url) => {photo.src=url})
     .catch((err) => console.error(err));
-   document.getElementById("content").appendChild(seen) 
-   }
+   seenDiv.appendChild(photo) 
+   seenDiv.appendChild(document.createElement("br"))
+   document.getElementById("content").appendChild(seenDiv) 
+   document.getElementById("content").appendChild(document.createElement("br"))
+  }
   })
   
 
@@ -157,6 +164,7 @@ function follow(){
   followRequest(followData).then(()=>{
     data={alreadyFollow:true,nickname:document.getElementById("nicknameDiv").innerText}
     createFollowDiv(data)
+    location.reload()
   })
   
 }
@@ -165,6 +173,7 @@ function unfollow(){
   unfollowRequest().then(()=>{
     data={alreadyFollow:false,nickname:document.getElementById("nicknameDiv").innerText}
     createFollowDiv(data)
+    location.reload()
   })
 }
 

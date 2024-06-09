@@ -11,18 +11,9 @@
 </head>
 <body>
   <header>
-
     <div id="logoDiv">
       <a id="logo" href="./mainPage.html"><img src="../img/carLogo.png" alt="logo"></a>
     </div>
-
-   
-  
-    <div id="leftSideBtnsDiv">
-      <div class="headBtn" onclick="renewToken()">odnow token </div>
-      <div class="headBtn" onclick="logout()" >Wyloguj</div>
-    </div>
-
   </header>
 
   <main>
@@ -31,7 +22,9 @@
       <input type="file" id="carPhoto" onchange="addedPhoto()" accept=".png, .jpg, .jpeg"/>
       <br>
       <img id="PreView" src="#" alt="Zalacz zdjecie">
-      <select name="Brand" id="Brand" onchange="choseBrand()"></select>
+      <div id="carSelect">
+        <select name="Brand" id="Brand" onchange="choseBrand()"></select>
+      </div>
     </div>
   </main>
 
@@ -43,6 +36,6 @@
 
   </footer>
   <script src="../scripts/addSeen.js"></script>
-  <script src="../scripts/mainPageScript.js"></script>
+
 </body>
 </html>

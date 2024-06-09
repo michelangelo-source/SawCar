@@ -29,6 +29,6 @@
         "password":document.getElementById("Password").value
       }
       postData().then((data)=>{
-      console.log(data)
+        window.location.replace("./index.html")
       });
     }
