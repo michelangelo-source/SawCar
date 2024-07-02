@@ -1,1 +1,0 @@
-INSERT INTO `users` (`ID`, `NickName`, `Email`, `Password`, `Type`) VALUES ('1', 'Tomek', 'tomek@sawcar.pl', 'qq', 'Admin');
