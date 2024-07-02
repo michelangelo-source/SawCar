@@ -1,16 +1,14 @@
 async function getList(url){
   const res =await fetch(url,{
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
+    method: "GET", 
+    mode: "cors", 
+    cache: "no-cache", 
+    credentials: "same-origin", 
     headers: {
-      "Authorization":sessionStorage.getItem("token") //////////////
-      // 'Content-Type': 'application/x-www-form-urlencoded',
+      "Authorization":sessionStorage.getItem("token") 
     },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    
+    redirect: "follow", 
+    referrerPolicy: "no-referrer", 
    })
   return res.json();
 }
@@ -52,7 +50,6 @@ function choseBrand(){
     select.addEventListener("change",choseModel)
     document.getElementById("content").appendChild(select)
     option=document.createElement("option")
-    // option.disabled=true
      option.autofocus=true
      option.innerHTML="..."
      select.appendChild(option)
@@ -62,7 +59,7 @@ function choseBrand(){
       option.innerHTML=element.model
       select.appendChild(option)
     });
-    console.log(res)
+
   })
 
 }
@@ -91,7 +88,7 @@ function choseModel(){
       option.innerHTML=element.generation
       select.appendChild(option)
     });
-    console.log(res)
+
   })
 
 }
@@ -133,16 +130,15 @@ function submit(){
 
 async function addSeenPost(formData){
   const res =await fetch("http://localhost:8080/seen/addSeen",{
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
+    method: "POST", 
+    mode: "cors", 
+    cache: "no-cache",
+    credentials: "same-origin", 
     headers: {
-      "Authorization":sessionStorage.getItem("token") //////////////
-      // 'Content-Type': 'application/x-www-form-urlencoded',
+      "Authorization":sessionStorage.getItem("token") 
     },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    redirect: "follow", 
+    referrerPolicy: "no-referrer", 
     body:formData
    })
 }

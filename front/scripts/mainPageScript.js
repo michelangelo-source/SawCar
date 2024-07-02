@@ -10,19 +10,16 @@ window.addEventListener("load", async () => {
    seenDiv.appendChild(document.createElement("br"))
    photo=document.createElement("img")
     await getPhoto(res[i].imageUrl).then((response) => {
-      console.log(res[i])
       const reader = response.body.getReader();
       return new ReadableStream({
         start(controller) {
           return pump();
           function pump() {
             return reader.read().then(({ done, value }) => {
-              // When no more data needs to be consumed, close the stream
               if (done) {
                 controller.close();
                 return;
               }
-              // Enqueue the next data chunk into our target stream
               controller.enqueue(value);
               return pump();
             });
@@ -30,12 +27,9 @@ window.addEventListener("load", async () => {
         },
       });
     })
-    // Create a new response out of the stream
     .then((stream) => new Response(stream))
-    // Create an object URL for the response
     .then((response) => response.blob())
     .then((blob) => URL.createObjectURL(blob))
-    // Update image
     .then((url) => {photo.src=url})
     .catch((err) => console.error(err));
    seenDiv.appendChild(photo) 
@@ -60,16 +54,16 @@ window.addEventListener("load", async () => {
 });
 async function getPhoto(url){
   const res =await fetch("http://localhost:8080"+url,{
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
+    method: "GET", 
+    mode: "cors", 
+    cache: "no-cache", 
+    credentials: "same-origin", 
     headers: {
-      "Authorization":sessionStorage.getItem("token") //////////////
-      // 'Content-Type': 'application/x-www-form-urlencoded',
+      "Authorization":sessionStorage.getItem("token") 
+
     },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    redirect: "follow", 
+    referrerPolicy: "no-referrer", 
     
    })
   return res;
@@ -78,16 +72,16 @@ async function getPhoto(url){
 
 async function getSeens(){
   const res =await fetch("http://localhost:8080/seen/getSeen/"+sessionStorage.getItem("id"),{
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
+    method: "GET", 
+    mode: "cors", 
+    cache: "no-cache", 
+    credentials: "same-origin", 
     headers: {
-      "Authorization":sessionStorage.getItem("token") //////////////
-      // 'Content-Type': 'application/x-www-form-urlencoded',
+      "Authorization":sessionStorage.getItem("token") 
+
     },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    redirect: "follow", 
+    referrerPolicy: "no-referrer", 
     
    })
   return res.json();
@@ -126,16 +120,16 @@ document.getElementById("content").appendChild(followDiv)
 
 async function followRequest(followData){
   const res =await fetch("http://localhost:8080/follow",{
-   method: "POST", // *GET, POST, PUT, DELETE, etc.
-   mode: "cors", // no-cors, *cors, same-origin
-   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-   credentials: "same-origin", // include, *same-origin, omit
+   method: "POST", 
+   mode: "cors", 
+   cache: "no-cache", 
+   credentials: "same-origin", 
    headers: {
-     "Authorization":sessionStorage.getItem("token"), //////////////
+     "Authorization":sessionStorage.getItem("token"), 
      "Content-Type": "application/json",
    },
-   redirect: "follow", // manual, *follow, error
-   referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+   redirect: "follow", 
+   referrerPolicy: "no-referrer", 
    body: JSON.stringify(followData)
   })
  }
@@ -143,16 +137,16 @@ async function followRequest(followData){
 
  async function unfollowRequest(followData){
   const res =await fetch("http://localhost:8080/follow/"+sessionStorage.getItem("nickname")+"/"+document.getElementById("nicknameDiv").innerText,{
-   method: "DELETE", // *GET, POST, PUT, DELETE, etc.
-   mode: "cors", // no-cors, *cors, same-origin
-   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-   credentials: "same-origin", // include, *same-origin, omit
+   method: "DELETE", 
+   mode: "cors", 
+   cache: "no-cache", 
+   credentials: "same-origin", 
    headers: {
-     "Authorization":sessionStorage.getItem("token"), //////////////
+     "Authorization":sessionStorage.getItem("token"), 
 
    },
-   redirect: "follow", // manual, *follow, error
-   referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+   redirect: "follow", 
+   referrerPolicy: "no-referrer", 
   })
  }
 
@@ -180,16 +174,16 @@ function unfollow(){
 
 async function getUser(url){
   const res =await fetch(url,{
-   method: "GET", // *GET, POST, PUT, DELETE, etc.
-   mode: "cors", // no-cors, *cors, same-origin
-   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-   credentials: "same-origin", // include, *same-origin, omit
+   method: "GET", 
+   mode: "cors", 
+   cache: "no-cache", 
+   credentials: "same-origin", 
    headers: {
-     "Authorization":sessionStorage.getItem("token") //////////////
+     "Authorization":sessionStorage.getItem("token") 
      // 'Content-Type': 'application/x-www-form-urlencoded',
    },
-   redirect: "follow", // manual, *follow, error
-   referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+   redirect: "follow", 
+   referrerPolicy: "no-referrer", 
    
   })
  return res.json();
@@ -210,16 +204,16 @@ async function getUser(url){
 
 async function destroyToken(){
   const res =await fetch("http://localhost:8080/token/"+sessionStorage.getItem("nickname"),{
-   method: "DELETE", // *GET, POST, PUT, DELETE, etc.
-   mode: "cors", // no-cors, *cors, same-origin
-   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-   credentials: "same-origin", // include, *same-origin, omit
+   method: "DELETE", 
+   mode: "cors",
+   cache: "no-cache", 
+   credentials: "same-origin",
    headers: {
-     "Authorization":sessionStorage.getItem("token") //////////////
-     // 'Content-Type': 'application/x-www-form-urlencoded',
+     "Authorization":sessionStorage.getItem("token") 
+
    },
-   redirect: "follow", // manual, *follow, error
-   referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+   redirect: "follow", 
+   referrerPolicy: "no-referrer", 
    
   })
  }
@@ -237,16 +231,16 @@ function logout(){
 
 async function renewSession(){
   const res =await fetch("http://localhost:8080/token",{
-   method: "POST", // *GET, POST, PUT, DELETE, etc.
-   mode: "cors", // no-cors, *cors, same-origin
-   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-   credentials: "same-origin", // include, *same-origin, omit
+   method: "POST", 
+   mode: "cors", 
+   cache: "no-cache", 
+   credentials: "same-origin", 
    headers: {
-     "Authorization":sessionStorage.getItem("token") //////////////
-     // 'Content-Type': 'application/x-www-form-urlencoded',
+     "Authorization":sessionStorage.getItem("token") 
+
    },
-   redirect: "follow", // manual, *follow, error
-   referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+   redirect: "follow", 
+   referrerPolicy: "no-referrer", 
    body: sessionStorage.getItem("nickname")
   })
   return res.json();
@@ -262,16 +256,15 @@ function renewToken(){
 
 async function moderatorPageAccess(){
   const res =await fetch("http://localhost:8080/moderator/access",{
-   method: "GET", // *GET, POST, PUT, DELETE, etc.
-   mode: "cors", // no-cors, *cors, same-origin
-   cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-   credentials: "same-origin", // include, *same-origin, omit
+   method: "GET",
+   mode: "cors", 
+   cache: "no-cache", 
+   credentials: "same-origin", 
    headers: {
-     "Authorization":sessionStorage.getItem("token") //////////////
-     // 'Content-Type': 'application/x-www-form-urlencoded',
+     "Authorization":sessionStorage.getItem("token") 
    },
-   redirect: "follow", // manual, *follow, error
-   referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+   redirect: "follow", 
+   referrerPolicy: "no-referrer",
    
   })
  return res.json();
