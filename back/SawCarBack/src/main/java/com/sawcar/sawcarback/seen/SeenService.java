@@ -7,8 +7,6 @@ import com.sawcar.sawcarback.cars.Model;
 import com.sawcar.sawcarback.storage.StorageService;
 import com.sawcar.sawcarback.user.UserRepository;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class SeenService {
 
     public List<Brand> getBrands(){
         return seenRepository.getBrands();
-    };
+    }
 
     public List<Model> getModels(long brandId) {
         return  seenRepository.getModels(brandId);
@@ -43,7 +41,6 @@ public class SeenService {
         seenRepository.save(seen);
     }
     public void addCar(Car car) {
-        System.out.println(car.getBrand()+" "+car.getModel()+" "+car.getGeneration()+" "+car.getStart_year()+" "+car.getEnd_year());
         seenRepository.addcar(car.getBrand(), car.getModel(), car.getGeneration(),car.getStart_year(),car.getEnd_year());
     }
 
@@ -64,7 +61,6 @@ public class SeenService {
             respond.setImageUrl(imageUrl);
             respondList.add(respond);
         }
-        System.out.println(respondList.get(0).getCarBrand());
         return respondList;
     }
 

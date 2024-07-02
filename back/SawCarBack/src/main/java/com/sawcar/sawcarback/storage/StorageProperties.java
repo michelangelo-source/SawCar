@@ -1,15 +1,15 @@
 package com.sawcar.sawcarback.storage;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+
 import org.springframework.context.annotation.Configuration;
 
-import java.nio.file.Paths;
+
 
 @Configuration
 public class StorageProperties {
 
 
-   private String location = "SawCarBack\\src\\usersPhotos";
+   private String location = "src\\usersPhotos";
 
 
     public String getLocation() {

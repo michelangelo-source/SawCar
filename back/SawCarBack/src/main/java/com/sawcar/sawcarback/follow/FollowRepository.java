@@ -1,11 +1,9 @@
 package com.sawcar.sawcarback.follow;
 
-import com.sawcar.sawcarback.follow.Follow;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.stereotype.Repository;
 
 @Repository
