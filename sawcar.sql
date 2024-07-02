@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Cze 09, 2024 at 03:07 PM
+-- Generation Time: Lip 02, 2024 at 05:28 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -166,7 +166,10 @@ INSERT INTO `follows` (`ID`, `UserID`, `Followed_UserdID`) VALUES
 (5, 2, 1),
 (7, 4, 6),
 (9, 4, 4),
-(10, 10, 10);
+(10, 10, 10),
+(12, 11, 11),
+(13, 11, 4),
+(14, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -197,7 +200,8 @@ INSERT INTO `seen` (`Id`, `user_id`, `text`, `filename`, `date`, `brand_id`, `mo
 (7, 6, 'Ty to jest civic', '5.jpg', '2024-06-07', 5, 7, 9),
 (8, 4, 'Passeratti', '6.jpg', '2024-06-09', 1, 5, 7),
 (9, 10, 'Lambo', '7.jpg', '2024-06-09', 6, 8, 10),
-(10, 4, 'FordGT', '8.jpg', '2024-06-09', 7, 9, 11);
+(10, 4, 'FordGT', '8.jpg', '2024-06-09', 7, 9, 11),
+(11, 4, '', '9.jpg', '2024-06-10', 3, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -363,7 +367,20 @@ INSERT INTO `tokens` (`ID`, `userID`, `token`, `generate_date`, `is_active`) VAL
 (143, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzkzNTY5NCwiZXhwIjoxNzE3OTM3MTM0fQ.tkBaA5ASgH7ibnsVunRITppum-U_xyLZSgFDlaxGXRI', '2024-06-09', 0),
 (144, 4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHdWlkbyIsImlhdCI6MTcxNzkzNTc1MiwiZXhwIjoxNzE3OTM3MTkyfQ.J9E0KI6uvCSbln3d5CxO4PmgTICRbIUCqciGxEhHmjM', '2024-06-09', 0),
 (145, 4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHdWlkbyIsImlhdCI6MTcxNzkzNzUyNSwiZXhwIjoxNzE3OTM4OTY1fQ.IgAL9IDNqFMrgTvEfFL5iPxveJtb1cAYlOyjMNBBq2I', '2024-06-09', 0),
-(146, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzkzNzk2MSwiZXhwIjoxNzE3OTM5NDAxfQ.fZ7oNyIxVfnHmGPGORk8nxcuVGYXgGe75rGZjERy5gg', '2024-06-09', 0);
+(146, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzkzNzk2MSwiZXhwIjoxNzE3OTM5NDAxfQ.fZ7oNyIxVfnHmGPGORk8nxcuVGYXgGe75rGZjERy5gg', '2024-06-09', 0),
+(147, 4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHdWlkbyIsImlhdCI6MTcxNzkzODUyOCwiZXhwIjoxNzE3OTM5OTY4fQ.WTE9lfPzQ-BuStzMm9Z5nhcPedxLNMsQ9kDIHLQL9gI', '2024-06-09', 0),
+(148, 4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHdWlkbyIsImlhdCI6MTcxNzkzODU1NywiZXhwIjoxNzE3OTM5OTk3fQ.qceEM6eQlGHTc0kE1WNdg7eb-WrSKpGJU3FlTicJdxU', '2024-06-09', 0),
+(149, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxNzkzODU2OCwiZXhwIjoxNzE3OTQwMDA4fQ.zy9qlCHYPkxeNEjOZ9hw5hNwcPiaXKNWftw5VuIV8OI', '2024-06-09', 0),
+(150, 4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHdWlkbyIsImlhdCI6MTcxODAzOTU0MywiZXhwIjoxNzE4MDQwOTgzfQ.8RLq2VBNvyo1biwIN2mQZNg6DNMP42CxV8XB04oZrTE', '2024-06-10', 0),
+(151, 4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHdWlkbyIsImlhdCI6MTcxODA0MDkyNCwiZXhwIjoxNzE4MDQyMzY0fQ.sztpp4OJDHb0j7AiNZLkA4kvU3z6P8_SJkB7fPEKTaY', '2024-06-10', 0),
+(152, 4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHdWlkbyIsImlhdCI6MTcxODA1MjIxOSwiZXhwIjoxNzE4MDUzNjU5fQ.gjfQmJBMcfifl3SdVSY4hdMqiugJoVZXnQnd6TjVp_8', '2024-06-10', 0),
+(153, 4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHdWlkbyIsImlhdCI6MTcxODA1MjI2NCwiZXhwIjoxNzE4MDUzNzA0fQ.fXgRDiRMW-UkCQzVzogfZaJEyTpZ_fuqltWUaqxWmY0', '2024-06-10', 0),
+(154, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxODA1MjI4NiwiZXhwIjoxNzE4MDUzNzI2fQ._qZOvjgnjOmU8rfXuW-qChjZC26miyycOtpwSlQwmto', '2024-06-10', 0),
+(155, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxODA1MjU1NywiZXhwIjoxNzE4MDUzOTk3fQ.amrbXtEzdhq-UJKcdb7E3mSLnNMGVcNEGn_6tXowZO8', '2024-06-10', 0),
+(156, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxODA1MzAxNSwiZXhwIjoxNzE4MDU0NDU1fQ.K3FMY4p1uAQb58GNEqtwb_OE0Tge_V9rpaVMbMZL200', '2024-06-10', 0),
+(157, 2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxOTkzMjg5NSwiZXhwIjoxNzE5OTM0MzM1fQ.cNWH_fQR5plyu-S6IyGVcHIklq9Sj6HGEPDbhbF2TGY', '2024-07-02', 0),
+(158, 4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHdWlkbyIsImlhdCI6MTcxOTkzMjk2NywiZXhwIjoxNzE5OTM0NDA3fQ.WiIUimmS28rmMsZRM1k7amyZsUl7n44r-PXcSbWpD0k', '2024-07-02', 1),
+(159, 11, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJOb3dha0IiLCJpYXQiOjE3MTk5MzM1NzAsImV4cCI6MTcxOTkzNTAxMH0.NueOXR7Eq44IMSXdX2BrhbUIyiZzBxwYC9p2bZYGc2k', '2024-07-02', 0);
 
 -- --------------------------------------------------------
 
@@ -394,7 +411,8 @@ INSERT INTO `users` (`ID`, `NickName`, `Email`, `Password`, `Type`, `name`, `sur
 (6, 'tomek', 'tomek@sawcar.pl', '$2a$10$5pp/G9cKvJfy3SMQv9HUje17j9ZVSC8e5pn/M9GrtfuWtW5P71tCS', 'USER', 'tomek', 'tomek', 1),
 (7, 'dar3cz3q', 'dar@gmail.com', '$2a$10$TS4A9yoNMytFSwBLtm9U0.grUUOPWIs/eyk/Z5tkR.PHfEnvZHG6m', 'USER', 'Darek', 'Homa', 1),
 (8, 'Guido2', 'tgacek2@sawcar.pl', '$2a$10$FpS6yZW0F32Gue/u6pJJqet2/kBZpLcBwDPuMNXvuO3VObN4lnWY6', 'USER', 'Tomek', 'Gacek', 1),
-(10, 'Michal', 'mi@sawcar.pl', '$2a$10$Tm2eRjJ5IDjfn9xuxa9/UOBzM44AKMVg6zapbGI60SAhEItkCdl/m', 'USER', 'Michal', 'Michal', 1);
+(10, 'Michal', 'mi@sawcar.pl', '$2a$10$Tm2eRjJ5IDjfn9xuxa9/UOBzM44AKMVg6zapbGI60SAhEItkCdl/m', 'USER', 'Michal', 'Michal', 1),
+(11, 'NowakB', 'nowakb@sawcar.pl', '$2a$10$Y9laLNdJcKXwhCqfIPjVjuwXI9ko1RL/wES/QcIJoA8CkCejt9/Zu', 'USER', 'Bartek', 'Nowak', 1);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -474,25 +492,25 @@ ALTER TABLE `car_model`
 -- AUTO_INCREMENT for table `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `seen`
 --
 ALTER TABLE `seen`
-  MODIFY `Id` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Id` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tokens`
 --
 ALTER TABLE `tokens`
-  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `ID` double NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` double UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` double UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
